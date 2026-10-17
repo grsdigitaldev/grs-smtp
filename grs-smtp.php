@@ -3,7 +3,7 @@
  * Plugin Name:       GRS SMTP
  * Plugin URI:        https://grsdigital.it
  * Description:       Invia le email di WordPress tramite il server SMTP del dominio, con email di test, log degli invii, avvisi di errore e controllo DNS.
- * Version:           1.1.1
+ * Version:           1.2.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            GRS Digital
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRS_SMTP_VERSION', '1.1.1' );
+define( 'GRS_SMTP_VERSION', '1.2.0' );
 define( 'GRS_SMTP_FILE', __FILE__ );
 define( 'GRS_SMTP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'GRS_SMTP_URL', plugin_dir_url( __FILE__ ) );

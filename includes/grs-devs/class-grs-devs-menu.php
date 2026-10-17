@@ -3,7 +3,7 @@
  * GRS DEVs - menu condiviso e pagina panoramica dei plugin GRS Digital.
  *
  * @package GRSDigital\Devs
- * @version 1.0.1
+ * @version 1.1.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -16,7 +16,9 @@ if ( ! class_exists( 'GRS_Devs_Menu', false ) ) {
 	 * Ogni plugin GRS:
 	 * - si registra nella panoramica con il filtro `grs_devs_plugins`;
 	 * - aggiunge UNA sola voce di sottomenu con add_submenu_page( GRS_Devs_Menu::SLUG, ... )
-	 *   su admin_menu con priorità 10 (le sezioni interne vanno in schede).
+	 *   su admin_menu con priorità 10 (le sezioni interne vanno in schede);
+	 * - (dalla 1.1.0) avvolge la pagina in <div class="wrap grs-ui"> e usa render_header() e
+	 *   render_footer(): lo stile condiviso grs-ui.css viene caricato da qui solo sulle pagine GRS DEVs.
 	 */
 	final class GRS_Devs_Menu {
 
@@ -46,6 +48,54 @@ if ( ! class_exists( 'GRS_Devs_Menu', false ) ) {
 		public static function init( $version ) {
 			self::$version = (string) $version;
 			add_action( 'admin_menu', array( __CLASS__, 'register_menu' ), 9 );
+			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_ui' ) );
+		}
+
+		/**
+		 * Stile condiviso, solo sulle pagine del menu GRS DEVs.
+		 *
+		 * @param string $hook_suffix Pagina corrente.
+		 * @return void
+		 */
+		public static function enqueue_ui( $hook_suffix ) {
+			$hook_suffix = (string) $hook_suffix;
+			if ( 'toplevel_page_' . self::SLUG !== $hook_suffix && 0 !== strpos( $hook_suffix, self::SLUG . '_page_' ) ) {
+				return;
+			}
+			wp_enqueue_style( 'grs-devs-ui', plugins_url( 'grs-ui.css', __FILE__ ), array(), self::$version );
+		}
+
+		/**
+		 * Intestazione standard delle pagine GRS: logo, titolo, sottotitolo, meta (badge, versione).
+		 *
+		 * Dopo l'intestazione stampa <hr class="wp-header-end">: WordPress sposta lì gli avvisi.
+		 *
+		 * @param string $title     Titolo (testo semplice).
+		 * @param string $subtitle  Sottotitolo (testo semplice, facoltativo).
+		 * @param string $meta_html HTML già sicuro per l'area a destra (badge); filtrato con wp_kses_post.
+		 * @return void
+		 */
+		public static function render_header( $title, $subtitle = '', $meta_html = '' ) {
+			echo '<div class="grs-ui-header">';
+			echo '<span class="grs-ui-header__logo" aria-hidden="true">' . self::LOGO_SVG . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG statico definito nel componente.
+			echo '<div class="grs-ui-header__text"><h1>' . esc_html( $title ) . '</h1>';
+			if ( '' !== (string) $subtitle ) {
+				echo '<p class="grs-ui-header__subtitle">' . esc_html( $subtitle ) . '</p>';
+			}
+			echo '</div>';
+			if ( '' !== (string) $meta_html ) {
+				echo '<div class="grs-ui-header__meta">' . wp_kses_post( $meta_html ) . '</div>';
+			}
+			echo '</div><hr class="wp-header-end">';
+		}
+
+		/**
+		 * Piede standard delle pagine GRS.
+		 *
+		 * @return void
+		 */
+		public static function render_footer() {
+			echo '<p class="grs-ui-footer">GRS Digital &middot; <a href="https://grsdigital.it" target="_blank" rel="noopener noreferrer">grsdigital.it</a> &middot; <a href="mailto:info@grsdigital.it">info@grsdigital.it</a></p>';
 		}
 
 		/**
@@ -146,16 +196,13 @@ if ( ! class_exists( 'GRS_Devs_Menu', false ) ) {
 			}
 			$plugins = self::plugins();
 			?>
-			<div class="wrap">
-				<h1 style="display:flex;align-items:center;gap:12px">
-					<span style="display:inline-block;width:40px;height:40px" aria-hidden="true"><?php echo self::LOGO_SVG; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG statico definito nel componente. ?></span>
-					GRS DEVs
-				</h1>
-				<p>Plugin sviluppati da GRS Digital attivi su questo sito.</p>
+			<div class="wrap grs-ui">
+				<?php self::render_header( 'GRS DEVs', 'Plugin sviluppati da GRS Digital attivi su questo sito.' ); ?>
+				<div class="grs-ui-card">
 				<?php if ( empty( $plugins ) ) : ?>
 					<p>Nessun plugin GRS registrato.</p>
 				<?php else : ?>
-					<table class="widefat striped" style="max-width:960px">
+					<table class="widefat striped">
 						<thead>
 							<tr>
 								<th scope="col">Plugin</th>
@@ -168,11 +215,11 @@ if ( ! class_exists( 'GRS_Devs_Menu', false ) ) {
 						<?php foreach ( $plugins as $plugin ) : ?>
 							<tr>
 								<td><strong><?php echo esc_html( $plugin['name'] ); ?></strong></td>
-								<td><?php echo esc_html( $plugin['version'] ); ?></td>
+								<td><span class="grs-ui-version"><?php echo esc_html( $plugin['version'] ); ?></span></td>
 								<td><?php echo esc_html( $plugin['description'] ); ?></td>
 								<td>
 									<?php if ( '' !== $plugin['url'] ) : ?>
-										<a class="button" href="<?php echo esc_url( $plugin['url'] ); ?>">Apri</a>
+										<a class="button button-primary" href="<?php echo esc_url( $plugin['url'] ); ?>">Apri</a>
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -180,9 +227,8 @@ if ( ! class_exists( 'GRS_Devs_Menu', false ) ) {
 						</tbody>
 					</table>
 				<?php endif; ?>
-				<p class="description" style="margin-top:2em">
-					GRS Digital &middot; <a href="https://grsdigital.it" target="_blank" rel="noopener noreferrer">grsdigital.it</a> &middot; <a href="mailto:info@grsdigital.it">info@grsdigital.it</a>
-				</p>
+				</div>
+				<?php self::render_footer(); ?>
 			</div>
 			<?php
 		}

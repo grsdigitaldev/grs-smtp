@@ -2,6 +2,15 @@
 
 Tutte le modifiche rilevanti a GRS SMTP. Formato [Keep a Changelog](https://keepachangelog.com/it/1.1.0/), versioni [SemVer](https://semver.org/lang/it/).
 
+## [1.2.0] - 2026-10-17
+
+### Aggiunto
+- Stile grafico condiviso dei plugin GRS (componente GRS DEVs 1.1.0: `includes/grs-devs/grs-ui.css`, `GRS_Devs_Menu::render_header()` e `render_footer()`), caricato solo sulle pagine del menu GRS DEVs e limitato al contenitore `.grs-ui`.
+
+### Modificato
+- Pagina di GRS SMTP con il nuovo stile: intestazione con logo, badge di stato e versione, schede a pillola, sezioni delle impostazioni in card, pulsanti principali gialli GRS, campi e tabelle arrotondati, stati del log a pillola, avvisi posizionati sotto l'intestazione.
+- Panoramica GRS DEVs con lo stesso stile.
+
 ## [1.1.1] - 2026-10-17
 
 ### Modificato

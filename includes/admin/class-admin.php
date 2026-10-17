@@ -141,7 +141,9 @@ class Admin {
 		if ( $hook_suffix !== $this->hook ) {
 			return;
 		}
-		wp_enqueue_style( 'grs-smtp-admin', GRS_SMTP_URL . 'assets/css/admin.css', array(), GRS_SMTP_VERSION );
+		// Dopo lo stile condiviso GRS DEVs (caricato dal componente sulle stesse pagine), se presente.
+		$deps = wp_style_is( 'grs-devs-ui', 'enqueued' ) ? array( 'grs-devs-ui' ) : array();
+		wp_enqueue_style( 'grs-smtp-admin', GRS_SMTP_URL . 'assets/css/admin.css', $deps, GRS_SMTP_VERSION );
 		wp_enqueue_script( 'grs-smtp-admin', GRS_SMTP_URL . 'assets/js/admin.js', array(), GRS_SMTP_VERSION, true );
 
 		$providers = array();
@@ -292,14 +294,18 @@ class Admin {
 			$tab = 'settings';
 		}
 
-		echo '<div class="wrap grs-smtp">';
+		echo '<div class="wrap grs-smtp grs-ui">';
 		// Fuori da Impostazioni WordPress non mostra da solo l'esito del salvataggio.
 		if ( 'settings' === $tab ) {
 			settings_errors();
 		}
-		echo '<h1 class="grs-smtp__title">GRS SMTP <span class="grs-smtp__version">v' . esc_html( GRS_SMTP_VERSION ) . '</span>';
-		echo $this->status_badge(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML costruito con escape nel metodo.
-		echo '</h1>';
+		$meta = $this->status_badge() . ' <span class="grs-ui-version">v' . esc_html( GRS_SMTP_VERSION ) . '</span>';
+		if ( method_exists( 'GRS_Devs_Menu', 'render_header' ) ) {
+			\GRS_Devs_Menu::render_header( 'GRS SMTP', __( 'Invio delle email del sito tramite il server SMTP del dominio.', 'grs-smtp' ), $meta );
+		} else {
+			// Componente GRS DEVs precedente alla 1.1.0 caricato da un altro plugin: intestazione semplice.
+			echo '<h1 class="grs-smtp__title">GRS SMTP ' . wp_kses_post( $meta ) . '</h1><hr class="wp-header-end">';
+		}
 
 		echo '<nav class="nav-tab-wrapper">';
 		foreach ( $tabs as $key => $label ) {
@@ -322,7 +328,11 @@ class Admin {
 				$this->render_settings();
 		}
 
-		echo '<p class="grs-smtp__footer">' . esc_html__( 'Sviluppato da', 'grs-smtp' ) . ' <a href="https://grsdigital.it" target="_blank" rel="noopener">GRS Digital</a> · <a href="mailto:info@grsdigital.it">info@grsdigital.it</a></p>';
+		if ( method_exists( 'GRS_Devs_Menu', 'render_footer' ) ) {
+			\GRS_Devs_Menu::render_footer();
+		} else {
+			echo '<p class="grs-smtp__footer">' . esc_html__( 'Sviluppato da', 'grs-smtp' ) . ' <a href="https://grsdigital.it" target="_blank" rel="noopener">GRS Digital</a> · <a href="mailto:info@grsdigital.it">info@grsdigital.it</a></p>';
+		}
 		echo '</div>';
 	}
 
@@ -333,16 +343,16 @@ class Admin {
 	 */
 	private function status_badge() {
 		if ( Mailer::delivery_disabled() ) {
-			return '<span class="grs-smtp__badge grs-smtp__badge--warn">' . esc_html__( 'Invii bloccati', 'grs-smtp' ) . '</span>';
+			return '<span class="grs-ui-badge grs-ui-badge--warn">' . esc_html__( 'Invii bloccati', 'grs-smtp' ) . '</span>';
 		}
 		if ( ! Settings::is_configured() ) {
-			return '<span class="grs-smtp__badge grs-smtp__badge--off">' . esc_html__( 'Non configurato', 'grs-smtp' ) . '</span>';
+			return '<span class="grs-ui-badge grs-ui-badge--info">' . esc_html__( 'Non configurato', 'grs-smtp' ) . '</span>';
 		}
 		$state = Notifier::state();
 		if ( (int) $state['count'] > 0 ) {
-			return '<span class="grs-smtp__badge grs-smtp__badge--error">' . esc_html__( 'Ultimo invio fallito', 'grs-smtp' ) . '</span>';
+			return '<span class="grs-ui-badge grs-ui-badge--error">' . esc_html__( 'Ultimo invio fallito', 'grs-smtp' ) . '</span>';
 		}
-		return '<span class="grs-smtp__badge grs-smtp__badge--ok">' . esc_html__( 'Attivo', 'grs-smtp' ) . '</span>';
+		return '<span class="grs-ui-badge grs-ui-badge--ok">' . esc_html__( 'Attivo', 'grs-smtp' ) . '</span>';
 	}
 
 	/**
@@ -411,6 +421,7 @@ class Admin {
 		settings_fields( self::GROUP );
 
 		// Server SMTP.
+		echo '<div class="grs-ui-card">';
 		echo '<h2>' . esc_html__( 'Server SMTP', 'grs-smtp' ) . '</h2>';
 		echo '<table class="form-table" role="presentation">';
 
@@ -471,9 +482,10 @@ class Admin {
 			echo '<p class="description">' . esc_html( $desc ) . '</p>';
 		}
 		echo '</td></tr>';
-		echo '</table>';
+		echo '</table></div>';
 
 		// Mittente.
+		echo '<div class="grs-ui-card">';
 		echo '<h2>' . esc_html__( 'Mittente', 'grs-smtp' ) . '</h2>';
 		echo '<table class="form-table" role="presentation">';
 		echo '<tr><th scope="row"><label for="grs-smtp-from_email">' . esc_html__( 'Email mittente', 'grs-smtp' ) . '</label></th><td>';
@@ -492,9 +504,10 @@ class Admin {
 		echo '<tr><th scope="row">' . esc_html__( 'Return-Path', 'grs-smtp' ) . '</th><td>';
 		$this->checkbox( 'return_path', __( 'Allinea il Return-Path al mittente', 'grs-smtp' ), __( 'Le notifiche di mancata consegna tornano all\'indirizzo mittente.', 'grs-smtp' ) );
 		echo '</td></tr>';
-		echo '</table>';
+		echo '</table></div>';
 
 		// Log.
+		echo '<div class="grs-ui-card">';
 		echo '<h2>' . esc_html__( 'Log', 'grs-smtp' ) . '</h2>';
 		echo '<table class="form-table" role="presentation">';
 		echo '<tr><th scope="row">' . esc_html__( 'Registro invii', 'grs-smtp' ) . '</th><td>';
@@ -511,9 +524,10 @@ class Admin {
 			echo '<option value="' . esc_attr( (string) $days ) . '"' . selected( (int) $settings['log_retention'], $days, false ) . '>' . esc_html( $label ) . '</option>';
 		}
 		echo '</select></td></tr>';
-		echo '</table>';
+		echo '</table></div>';
 
 		// Avvisi.
+		echo '<div class="grs-ui-card">';
 		echo '<h2>' . esc_html__( 'Avvisi di errore', 'grs-smtp' ) . '</h2>';
 		echo '<table class="form-table" role="presentation">';
 		echo '<tr><th scope="row">' . esc_html__( 'Avviso via email', 'grs-smtp' ) . '</th><td>';
@@ -521,9 +535,10 @@ class Admin {
 		echo '<div class="grs-smtp__sub">';
 		$this->text( 'alert_email', 'email', __( 'Indirizzo che riceve gli avvisi (meglio di un altro dominio, es. il tuo di assistenza).', 'grs-smtp' ) );
 		echo '</div></td></tr>';
-		echo '</table>';
+		echo '</table></div>';
 
 		// Avanzate.
+		echo '<div class="grs-ui-card">';
 		echo '<h2>' . esc_html__( 'Avanzate', 'grs-smtp' ) . '</h2>';
 		echo '<table class="form-table" role="presentation">';
 		echo '<tr><th scope="row">' . esc_html__( 'Modalità staging', 'grs-smtp' ) . '</th><td>';
@@ -532,7 +547,7 @@ class Admin {
 		echo '<tr><th scope="row">' . esc_html__( 'Disinstallazione', 'grs-smtp' ) . '</th><td>';
 		$this->checkbox( 'keep_data', __( 'Conserva impostazioni e log se il plugin viene eliminato', 'grs-smtp' ) );
 		echo '</td></tr>';
-		echo '</table>';
+		echo '</table></div>';
 
 		submit_button( __( 'Salva impostazioni', 'grs-smtp' ) );
 		echo '</form>';
@@ -546,7 +561,7 @@ class Admin {
 	private function render_test() {
 		$user = wp_get_current_user();
 
-		echo '<div class="grs-smtp__card">';
+		echo '<div class="grs-smtp__card grs-ui-card">';
 		echo '<h2>' . esc_html__( 'Invia un\'email di test', 'grs-smtp' ) . '</h2>';
 		echo '<p>' . esc_html__( 'Verifica che le impostazioni funzionino. In caso di errore ti mostro cosa controllare e il dettaglio della connessione (credenziali e contenuto sono nascosti).', 'grs-smtp' ) . '</p>';
 		echo '<form id="grs-smtp-test-form" class="grs-smtp__test-form">';
@@ -603,6 +618,7 @@ class Admin {
 		$table = new Log_Table();
 		$table->prepare_items();
 
+		echo '<div class="grs-ui-card grs-smtp__log">';
 		echo '<form method="get">';
 		echo '<input type="hidden" name="page" value="' . esc_attr( self::SLUG ) . '">';
 		echo '<input type="hidden" name="tab" value="log">';
@@ -610,6 +626,7 @@ class Admin {
 		$table->search_box( __( 'Cerca', 'grs-smtp' ), 'grs-smtp-search' );
 		$table->display();
 		echo '</form>';
+		echo '</div>';
 
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="grs-smtp__clear" data-grs-confirm="all">';
 		echo '<input type="hidden" name="action" value="grs_smtp_log">';
@@ -642,7 +659,7 @@ class Admin {
 		$files       = Logger::files_of( $row );
 		$attachments = array_merge( array_values( $files['files'] ), array_values( $files['embeds'] ) );
 
-		echo '<div class="grs-smtp__card">';
+		echo '<div class="grs-smtp__card grs-ui-card">';
 		echo '<table class="widefat striped grs-smtp__detail"><tbody>';
 		echo '<tr><th>' . esc_html__( 'Data', 'grs-smtp' ) . '</th><td>' . esc_html( get_date_from_gmt( $row->created_at, 'd/m/Y H:i:s' ) ) . '</td></tr>';
 		echo '<tr><th>' . esc_html__( 'Stato', 'grs-smtp' ) . '</th><td>' . Log_Table::status_html( $row->status ) . '</td></tr>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escape nel metodo.
@@ -689,7 +706,7 @@ class Admin {
 		if ( '' !== $message ) {
 			echo '<a class="button button-primary" href="' . esc_url( self::log_action_url( 'resend', (int) $row->id ) ) . '">' . esc_html__( 'Reinvia', 'grs-smtp' ) . '</a> ';
 		}
-		echo '<a class="button grs-smtp__delete" data-grs-confirm="1" href="' . esc_url( self::log_action_url( 'delete', (int) $row->id ) ) . '">' . esc_html__( 'Elimina', 'grs-smtp' ) . '</a>';
+		echo '<a class="button grs-ui-button--danger grs-smtp__delete" data-grs-confirm="1" href="' . esc_url( self::log_action_url( 'delete', (int) $row->id ) ) . '">' . esc_html__( 'Elimina', 'grs-smtp' ) . '</a>';
 		echo '</p></div>';
 	}
 
@@ -780,7 +797,7 @@ class Admin {
 		$from_email = Mailer::from_email();
 		$domain     = '' !== $from_email ? substr( (string) strrchr( $from_email, '@' ), 1 ) : '';
 
-		echo '<div class="grs-smtp__card">';
+		echo '<div class="grs-smtp__card grs-ui-card">';
 		echo '<h2>' . esc_html__( 'Controllo DNS del dominio mittente', 'grs-smtp' ) . '</h2>';
 
 		if ( '' === $domain ) {
@@ -839,7 +856,7 @@ class Admin {
 			array( 'info', __( 'Versioni', 'grs-smtp' ), 'WordPress ' . get_bloginfo( 'version' ) . ' · PHP ' . PHP_VERSION . ' · GRS SMTP ' . GRS_SMTP_VERSION ),
 		);
 
-		echo '<div class="grs-smtp__card">';
+		echo '<div class="grs-smtp__card grs-ui-card">';
 		echo '<h2>' . esc_html__( 'Stato', 'grs-smtp' ) . '</h2>';
 		echo '<table class="widefat striped grs-smtp__checks"><tbody>';
 		foreach ( $rows as $row ) {
@@ -849,7 +866,7 @@ class Admin {
 		echo '</div>';
 
 		// Costanti.
-		echo '<div class="grs-smtp__card">';
+		echo '<div class="grs-smtp__card grs-ui-card">';
 		echo '<h2>' . esc_html__( 'Configurazione da wp-config.php (facoltativa)', 'grs-smtp' ) . '</h2>';
 		echo '<p>' . esc_html__( 'Utile per non salvare la password nel database o per bloccare le impostazioni. Le costanti definite hanno la precedenza sui campi.', 'grs-smtp' ) . '</p>';
 		$snippet = "define( 'GRS_SMTP_HOST', 'smtps.aruba.it' );\ndefine( 'GRS_SMTP_PORT', 465 );\ndefine( 'GRS_SMTP_ENCRYPTION', 'ssl' ); // ssl, tls, none\ndefine( 'GRS_SMTP_AUTH', true );\ndefine( 'GRS_SMTP_USER', 'info@dominio.it' );\ndefine( 'GRS_SMTP_PASS', 'password' );\ndefine( 'GRS_SMTP_FROM_EMAIL', 'info@dominio.it' );\ndefine( 'GRS_SMTP_FROM_NAME', 'Nome Azienda' );\ndefine( 'GRS_SMTP_DISABLE_DELIVERY', true ); // solo su staging";

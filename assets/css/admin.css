@@ -1,47 +1,70 @@
-/* GRS SMTP - admin */
+/* GRS SMTP - admin. Base grafica condivisa: includes/grs-devs/grs-ui.css (classe .grs-ui). */
+
+/* Valori di riserva se il foglio condiviso non è caricato (componente GRS DEVs < 1.1.0). */
+.grs-smtp {
+	--grs-ink: #15181d;
+	--grs-muted: #626a75;
+	--grs-line: #e2e5ea;
+	--grs-surface-soft: #f7f8fa;
+	--grs-ok: #0a7a45;
+	--grs-ok-soft: #e7f6ee;
+	--grs-warn: #8a5a00;
+	--grs-warn-soft: #fff4dc;
+	--grs-err: #b42318;
+	--grs-err-soft: #fdecea;
+	--grs-info: #1d5fae;
+	--grs-info-soft: #eaf2fc;
+	--grs-radius-sm: 8px;
+}
+
 .grs-smtp__title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.grs-smtp__version { font-size: 13px; font-weight: 400; color: #646970; }
-.grs-smtp__badge { font-size: 12px; font-weight: 600; line-height: 1; padding: 6px 10px; border-radius: 999px; }
-.grs-smtp__badge--ok { background: #edfaef; color: #00742b; }
-.grs-smtp__badge--warn { background: #fcf9e8; color: #8a6100; }
-.grs-smtp__badge--error { background: #fcf0f1; color: #b32d2e; }
-.grs-smtp__badge--off { background: #f0f0f1; color: #50575e; }
+.grs-smtp__card { background: #fff; border: 1px solid var(--grs-line); border-radius: 12px; padding: 20px 24px; margin: 0 0 18px; }
 
-.grs-smtp__card { background: #fff; border: 1px solid #c3c4c7; border-radius: 4px; padding: 4px 20px 16px; margin: 20px 0; max-width: 960px; }
-.grs-smtp__sub { margin-top: 10px; }
-.grs-smtp__radio { display: inline-block; margin: 0 16px 6px 0; }
-.grs-smtp__locked { color: #8a6100; }
+/* Impostazioni */
+.grs-smtp__sub { margin-top: 12px; }
+.grs-smtp__radio { display: inline-flex; align-items: center; gap: 6px; margin: 0 8px 8px 0; padding: 7px 12px; border: 1px solid var(--grs-line); border-radius: var(--grs-radius-sm); background: #fff; cursor: pointer; }
+.grs-smtp__radio:has(input:checked) { border-color: var(--grs-ink); background: var(--grs-surface-soft); }
+.grs-smtp__locked { color: var(--grs-warn); }
+.grs-smtp__form .submit { margin-top: 4px; }
 
-.grs-smtp__test-form { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+/* Email di test */
+.grs-smtp__test-form { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 14px 0 6px; }
 .grs-smtp__result { margin-top: 16px; }
-.grs-smtp__hint { background: #f6f7f7; border-left: 4px solid #2271b1; padding: 8px 12px; margin: 12px 0; }
+.grs-smtp__result .notice { margin: 0 0 10px; }
+.grs-smtp__sending { color: var(--grs-muted); }
+.grs-smtp__hint { background: var(--grs-info-soft); border-left: 4px solid var(--grs-info); border-radius: var(--grs-radius-sm); padding: 10px 14px; margin: 12px 0; }
 .grs-smtp__hint p { margin: 4px 0 0; }
-.grs-smtp__debug summary { cursor: pointer; font-weight: 600; margin: 8px 0; }
-.grs-smtp__pre { background: #f6f7f7; border: 1px solid #dcdcde; padding: 10px; max-height: 360px; overflow: auto; white-space: pre-wrap; word-break: break-word; font-size: 12px; margin: 6px 0 0; }
+.grs-smtp__debug summary { cursor: pointer; font-weight: 600; margin: 10px 0; color: var(--grs-ink); }
+.grs-smtp__pre { background: var(--grs-surface-soft); border: 1px solid var(--grs-line); border-radius: var(--grs-radius-sm); padding: 12px; max-height: 360px; overflow: auto; white-space: pre-wrap; word-break: break-word; font-size: 12px; margin: 6px 0 0; }
 .grs-smtp__pre--body { max-height: 600px; }
 
-.grs-smtp__status { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 3px; background: #f0f0f1; color: #50575e; }
-.grs-smtp__status--sent { background: #edfaef; color: #00742b; }
-.grs-smtp__status--failed { background: #fcf0f1; color: #b32d2e; }
-.grs-smtp__status--blocked { background: #fcf9e8; color: #8a6100; }
-.grs-smtp__error { color: #b32d2e; }
-.grs-smtp__tag { font-size: 11px; background: #f0f6fc; color: #2271b1; padding: 1px 6px; border-radius: 3px; }
-.grs-smtp__delete { color: #b32d2e; }
-.grs-smtp__clear { margin-top: 16px; }
+/* Stati del log */
+.grs-smtp__status { display: inline-block; font-size: 12px; font-weight: 600; line-height: 1; padding: 5px 10px; border-radius: 999px; background: var(--grs-surface-soft); color: var(--grs-muted); }
+.grs-smtp__status--sent { background: var(--grs-ok-soft); color: var(--grs-ok); }
+.grs-smtp__status--failed { background: var(--grs-err-soft); color: var(--grs-err); }
+.grs-smtp__status--blocked { background: var(--grs-warn-soft); color: var(--grs-warn); }
+.grs-smtp__status--intercepted { background: var(--grs-info-soft); color: var(--grs-info); }
+.grs-smtp__error { color: var(--grs-err); }
+.grs-smtp__tag { font-size: 11px; background: var(--grs-info-soft); color: var(--grs-info); padding: 2px 7px; border-radius: 999px; }
+.grs-smtp .row-actions .grs-smtp__delete,
+.grs-smtp a.grs-smtp__delete:not(.button) { color: var(--grs-err); }
+.grs-smtp__log .search-box { margin-bottom: 8px; }
+.grs-smtp__clear { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
 
+/* Dettaglio email */
 .grs-smtp__detail th { width: 160px; }
-.grs-smtp__preview { width: 100%; min-height: 480px; border: 1px solid #dcdcde; background: #fff; }
-.grs-smtp__actions { margin-top: 16px; }
+.grs-smtp__preview { width: 100%; min-height: 480px; border: 1px solid var(--grs-line); border-radius: var(--grs-radius-sm); background: #fff; }
+.grs-smtp__actions { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
 
+/* Diagnostica */
 .grs-smtp__checks th { width: 220px; }
 .grs-smtp__check-status { width: 28px; }
-.grs-smtp__icon--ok { color: #00a32a; }
-.grs-smtp__icon--warn { color: #dba617; }
-.grs-smtp__icon--error { color: #d63638; }
-.grs-smtp__icon--info { color: #72aee6; }
-.grs-smtp__dns-form { margin-bottom: 12px; }
-
-.grs-smtp__footer { color: #646970; margin-top: 24px; }
+.grs-smtp__icon--ok { color: var(--grs-ok); }
+.grs-smtp__icon--warn { color: #c98a00; }
+.grs-smtp__icon--error { color: var(--grs-err); }
+.grs-smtp__icon--info { color: var(--grs-info); }
+.grs-smtp__dns-form { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 12px 0 14px; }
+.grs-smtp__dns-form p { flex-basis: 100%; margin: 0 0 4px; }
 
 @media screen and (max-width: 782px) {
 	.grs-smtp__detail th, .grs-smtp__checks th { width: auto; }

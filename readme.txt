@@ -4,7 +4,7 @@ Tags: smtp, email, mail, log, wp mail
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,7 +28,7 @@ Sviluppato da GRS Digital - https://grsdigital.it - info@grsdigital.it
 
 == Installation ==
 
-1. Bacheca → Plugin → Aggiungi nuovo → Carica plugin, scegli grs-smtp-1.1.1.zip e attiva. Dalla 1.1.1 gli aggiornamenti successivi arrivano in automatico dalle release su GitHub.
+1. Bacheca → Plugin → Aggiungi nuovo → Carica plugin, scegli lo zip di GRS SMTP e attiva. Dalla 1.1.1 gli aggiornamenti successivi arrivano in automatico dalle release su GitHub.
 2. GRS DEVs → SMTP: scegli il provider, inserisci utente, password e mittente, salva.
 3. Scheda "Email di test": invia un test.
 4. Scheda "Diagnostica": esegui il controllo DNS del dominio mittente.
@@ -57,6 +57,10 @@ Sì, con impostazioni separate per ogni sito.
 
 == Changelog ==
 
+= 1.2.0 - 2026-10-17 =
+* Nuova grafica: intestazione con logo GRS, schede a pillola, sezioni in card, pulsanti e campi arrotondati, colori GRS (grafite e giallo), stati più leggibili. Solo CSS leggero, nessuno script o font aggiuntivo.
+* Lo stile è condiviso con gli altri plugin GRS tramite il componente GRS DEVs 1.1.0 e viene caricato solo sulle pagine GRS DEVs.
+
 = 1.1.1 - 2026-10-17 =
 * Aggiornamenti automatici attivi: il plugin controlla le release pubblicate su https://github.com/grsdigitaldev/grs-smtp e propone l'aggiornamento in bacheca.
 
@@ -74,6 +78,9 @@ Sì, con impostazioni separate per ogni sito.
 * Prima release.
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Nuova grafica delle pagine del plugin, nessun cambiamento al funzionamento.
 
 = 1.1.1 =
 Da installare a mano una volta: dalla versione successiva gli aggiornamenti arrivano in automatico.

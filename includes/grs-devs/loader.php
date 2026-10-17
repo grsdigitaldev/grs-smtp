@@ -11,7 +11,7 @@
  * plugin: la fonte è dev/grs-devs-menu.md nel Progetto.
  *
  * @package GRSDigital\Devs
- * @version 1.0.1
+ * @version 1.1.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -58,4 +58,4 @@ if ( ! function_exists( 'grs_devs_register_candidate' ) ) {
 	add_action( 'plugins_loaded', 'grs_devs_load_latest', 1 );
 }
 
-grs_devs_register_candidate( '1.0.1', __DIR__ . '/class-grs-devs-menu.php' );
+grs_devs_register_candidate( '1.1.0', __DIR__ . '/class-grs-devs-menu.php' );
