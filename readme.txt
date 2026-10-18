@@ -4,7 +4,7 @@ Tags: smtp, email, mail, log, wp mail
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,6 +23,7 @@ GRS SMTP fa partire tutte le email del sito (moduli, WooCommerce, notifiche, rec
 * Controllo SPF, DMARC e DKIM del dominio mittente.
 * Modalità staging: blocca gli invii sulle copie di sviluppo.
 * Avviso se è attivo un altro plugin SMTP.
+* Pronto per i siti multilingua: interfaccia in inglese con traduzione italiana inclusa, nome mittente traducibile con WPML o Polylang.
 
 Sviluppato da GRS Digital - https://grsdigital.it - info@grsdigital.it
 
@@ -51,11 +52,20 @@ L'hosting potrebbe bloccare le porte SMTP in uscita. Prova 587 con TLS oppure 46
 
 La password salvata non è più decifrabile: il plugin lo segnala e basta inserirla di nuovo.
 
+= Il plugin funziona su un sito multilingua? =
+
+Sì. L'interfaccia segue la lingua dell'utente (inglese di base, italiano incluso; altre lingue con Loco Translate). Il nome mittente, se compilato, compare in WPML → Traduzione stringhe (contesto "GRS SMTP") o in Polylang → Lingue → Traduzioni e viene usato nella lingua corrente al momento dell'invio. L'indirizzo mittente resta uguale in tutte le lingue.
+
 = Il plugin funziona in multisite? =
 
 Sì, con impostazioni separate per ogni sito.
 
 == Changelog ==
+
+= 1.3.0 - 2026-10-17 =
+* Nuovo: testi del plugin in inglese con traduzione italiana inclusa (.po, .mo e .l10n.php): l'interfaccia segue la lingua dell'utente e si può ritradurre con Loco Translate.
+* Nuovo: il nome mittente si traduce con WPML (String Translation) o Polylang tramite il componente condiviso GRS i18n.
+* Modificato: date di log, dettaglio, diagnostica, email di test e avvisi nel formato impostato in Impostazioni → Generali.
 
 = 1.2.0 - 2026-10-17 =
 * Nuova grafica: intestazione con logo GRS, schede a pillola, sezioni in card, pulsanti e campi arrotondati, colori GRS (grafite e giallo), stati più leggibili. Solo CSS leggero, nessuno script o font aggiuntivo.
@@ -78,6 +88,9 @@ Sì, con impostazioni separate per ogni sito.
 * Prima release.
 
 == Upgrade Notice ==
+
+= 1.3.0 =
+Supporto multilingua: interfaccia in inglese con italiano incluso, nome mittente traducibile con WPML o Polylang. Nessuna nuova impostazione da configurare.
 
 = 1.2.0 =
 Nuova grafica delle pagine del plugin, nessun cambiamento al funzionamento.

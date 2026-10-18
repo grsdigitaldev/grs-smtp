@@ -120,7 +120,7 @@ class Logger {
 		if ( null !== $result ) {
 			$id     = $this->pop();
 			$status = Mailer::delivery_disabled() ? self::STATUS_BLOCKED : self::STATUS_INTERCEPTED;
-			$error  = self::STATUS_INTERCEPTED === $status ? __( 'Invio gestito da un altro plugin (filtro pre_wp_mail).', 'grs-smtp' ) : '';
+			$error  = self::STATUS_INTERCEPTED === $status ? __( 'Delivery handled by another plugin (pre_wp_mail filter).', 'grs-smtp' ) : '';
 			$this->update( $id, $status, $error );
 		}
 		return $result;
@@ -142,7 +142,7 @@ class Logger {
 	 * @return void
 	 */
 	public function on_failed( $error ) {
-		$message = is_wp_error( $error ) ? $error->get_error_message() : __( 'Errore sconosciuto.', 'grs-smtp' );
+		$message = is_wp_error( $error ) ? $error->get_error_message() : __( 'Unknown error.', 'grs-smtp' );
 		$note    = Mailer::is_bypassed() ? '' : Settings::failure_note();
 		if ( '' !== $note ) {
 			$message .= ' ' . $note;
@@ -400,10 +400,10 @@ class Logger {
 	public static function resend( $id ) {
 		$row = self::get( $id );
 		if ( ! $row ) {
-			return new \WP_Error( 'grs_smtp_not_found', __( 'Email non trovata nel log.', 'grs-smtp' ) );
+			return new \WP_Error( 'grs_smtp_not_found', __( 'Email not found in the log.', 'grs-smtp' ) );
 		}
 		if ( '' === (string) $row->message ) {
-			return new \WP_Error( 'grs_smtp_no_content', __( 'Il contenuto di questa email non è stato salvato: impossibile reinviarla.', 'grs-smtp' ) );
+			return new \WP_Error( 'grs_smtp_no_content', __( 'The content of this email was not saved: it cannot be resent.', 'grs-smtp' ) );
 		}
 
 		$to          = array_filter( array_map( 'trim', explode( ',', (string) $row->to_email ) ) );
@@ -418,7 +418,7 @@ class Logger {
 		self::$resend_of = 0;
 
 		if ( ! $sent ) {
-			return new \WP_Error( 'grs_smtp_resend_failed', __( 'Reinvio non riuscito: controlla il log per il dettaglio.', 'grs-smtp' ) );
+			return new \WP_Error( 'grs_smtp_resend_failed', __( 'Resend failed: check the log for details.', 'grs-smtp' ) );
 		}
 		return true;
 	}

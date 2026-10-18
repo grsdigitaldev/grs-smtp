@@ -120,7 +120,11 @@ class Mailer {
 	public static function from_name() {
 		$name = (string) Settings::get( 'from_name' );
 		if ( '' === $name ) {
-			$name = wp_specialchars_decode( (string) get_bloginfo( 'name' ), ENT_QUOTES );
+			// Il nome del sito è già tradotto da WPML/Polylang quando serve.
+			return wp_specialchars_decode( (string) get_bloginfo( 'name' ), ENT_QUOTES );
+		}
+		if ( class_exists( 'GRS_I18n' ) ) {
+			$name = (string) \GRS_I18n::translate( $name, Plugin::I18N_CONTEXT, 'from_name' );
 		}
 		return $name;
 	}
@@ -201,7 +205,7 @@ class Mailer {
 			if ( 'AUTH' === $verb ) {
 				$parts              = explode( ' ', $command );
 				$mechanism          = isset( $parts[1] ) ? $parts[1] : '';
-				self::$debug[]      = $client_prefix . ' AUTH ' . $mechanism . ' ' . __( '[credenziali nascoste]', 'grs-smtp' );
+				self::$debug[]      = $client_prefix . ' AUTH ' . $mechanism . ' ' . __( '[credentials hidden]', 'grs-smtp' );
 				self::$debug_hiding = true;
 				return;
 			}
@@ -212,7 +216,7 @@ class Mailer {
 			}
 			// Credenziali (base64) o righe del messaggio: mai mostrate.
 			if ( ! self::$debug_hiding ) {
-				self::$debug[]      = $client_prefix . ' ' . __( '[contenuto nascosto]', 'grs-smtp' );
+				self::$debug[]      = $client_prefix . ' ' . __( '[content hidden]', 'grs-smtp' );
 				self::$debug_hiding = true;
 			}
 			return;

@@ -26,19 +26,19 @@ class Dns_Check {
 		$checks = array();
 
 		if ( '' === $domain ) {
-			$checks[] = self::item( __( 'Dominio mittente', 'grs-smtp' ), 'error', __( 'Nessun indirizzo mittente configurato.', 'grs-smtp' ) );
+			$checks[] = self::item( __( 'Sender domain', 'grs-smtp' ), 'error', __( 'No sender address configured.', 'grs-smtp' ) );
 			return $checks;
 		}
 
 		if ( ! function_exists( 'dns_get_record' ) ) {
-			$checks[] = self::item( __( 'DNS', 'grs-smtp' ), 'info', __( 'Il server non permette interrogazioni DNS da PHP (dns_get_record non disponibile). Usa uno strumento esterno come MXToolbox.', 'grs-smtp' ) );
+			$checks[] = self::item( __( 'DNS', 'grs-smtp' ), 'info', __( 'The server does not allow DNS queries from PHP (dns_get_record not available). Use an external tool such as MXToolbox.', 'grs-smtp' ) );
 			return $checks;
 		}
 
 		$checks[] = self::check_alignment( $domain );
 
 		if ( ! self::resolvable( $domain ) ) {
-			$checks[] = self::item( __( 'DNS', 'grs-smtp' ), 'info', __( 'Impossibile interrogare il DNS del dominio da questo server (risoluzione bloccata o dominio inesistente). Verifica SPF, DKIM e DMARC con uno strumento esterno come MXToolbox.', 'grs-smtp' ) );
+			$checks[] = self::item( __( 'DNS', 'grs-smtp' ), 'info', __( 'Unable to query the domain\'s DNS from this server (resolution blocked or domain does not exist). Check SPF, DKIM and DMARC with an external tool such as MXToolbox.', 'grs-smtp' ) );
 			return $checks;
 		}
 
@@ -94,16 +94,16 @@ class Dns_Check {
 	 * @return array
 	 */
 	private static function check_alignment( $domain ) {
-		$label    = __( 'Mittente e account SMTP', 'grs-smtp' );
+		$label    = __( 'Sender and SMTP account', 'grs-smtp' );
 		$username = strtolower( (string) Settings::get( 'username' ) );
 
 		if ( ! is_email( $username ) ) {
-			return self::item( $label, 'info', __( 'L\'utente SMTP non è un indirizzo email: verifica con il provider che possa inviare a nome del dominio mittente.', 'grs-smtp' ) );
+			return self::item( $label, 'info', __( 'The SMTP username is not an email address: check with the provider that it can send on behalf of the sender domain.', 'grs-smtp' ) );
 		}
 
 		$user_domain = substr( (string) strrchr( $username, '@' ), 1 );
 		if ( $user_domain === $domain ) {
-			return self::item( $label, 'ok', __( 'Il mittente usa lo stesso dominio dell\'account SMTP.', 'grs-smtp' ) );
+			return self::item( $label, 'ok', __( 'The sender uses the same domain as the SMTP account.', 'grs-smtp' ) );
 		}
 
 		return self::item(
@@ -111,7 +111,7 @@ class Dns_Check {
 			'warn',
 			sprintf(
 				/* translators: 1: dominio mittente, 2: dominio account SMTP. */
-				__( 'Il mittente (@%1$s) è diverso dall\'account SMTP (@%2$s). Molti provider rifiutano o segnano come spam queste email: usa un mittente dello stesso dominio o autorizzalo nel provider.', 'grs-smtp' ),
+				__( 'The sender (@%1$s) differs from the SMTP account (@%2$s). Many providers reject these emails or mark them as spam: use a sender on the same domain or authorize it with the provider.', 'grs-smtp' ),
 				$domain,
 				$user_domain
 			)
@@ -129,7 +129,7 @@ class Dns_Check {
 		$records = self::txt( $domain );
 
 		if ( false === $records ) {
-			return self::item( $label, 'info', __( 'Impossibile interrogare il DNS in questo momento.', 'grs-smtp' ) );
+			return self::item( $label, 'info', __( 'Unable to query DNS right now.', 'grs-smtp' ) );
 		}
 
 		$spf = array_values(
@@ -142,21 +142,21 @@ class Dns_Check {
 		);
 
 		if ( ! $spf ) {
-			return self::item( $label, 'error', __( 'Nessun record SPF trovato. Aggiungine uno che autorizzi il server SMTP usato (chiedi il valore al provider della posta).', 'grs-smtp' ) );
+			return self::item( $label, 'error', __( 'No SPF record found. Add one that authorizes the SMTP server in use (ask your email provider for the value).', 'grs-smtp' ) );
 		}
 		if ( count( $spf ) > 1 ) {
-			return self::item( $label, 'error', __( 'Ci sono più record SPF: è un errore, i provider li considerano non validi. Uniscili in un unico record.', 'grs-smtp' ), implode( "\n", $spf ) );
+			return self::item( $label, 'error', __( 'There are multiple SPF records: this is an error and providers treat them as invalid. Merge them into a single record.', 'grs-smtp' ), implode( "\n", $spf ) );
 		}
 
 		$record = strtolower( $spf[0] );
 
 		if ( preg_match( '/(^|\s)\+?all(\s|$)/', $record ) ) {
-			return self::item( $label, 'warn', __( 'Il record SPF termina con "+all": autorizza chiunque a inviare a nome del dominio. Usa "~all" o "-all".', 'grs-smtp' ), $spf[0] );
+			return self::item( $label, 'warn', __( 'The SPF record ends with "+all": it authorizes anyone to send on behalf of the domain. Use "~all" or "-all".', 'grs-smtp' ), $spf[0] );
 		}
 
 		$lookups = preg_match_all( '/\b(include:|a\b|a:|mx\b|mx:|ptr|exists:|redirect=)/', $record );
 		if ( $lookups > 10 ) {
-			return self::item( $label, 'error', __( 'Il record SPF supera il limite di 10 interrogazioni DNS: viene considerato non valido.', 'grs-smtp' ), $spf[0] );
+			return self::item( $label, 'error', __( 'The SPF record exceeds the limit of 10 DNS lookups: it is treated as invalid.', 'grs-smtp' ), $spf[0] );
 		}
 
 		$providers = Providers::all();
@@ -166,13 +166,13 @@ class Dns_Check {
 		if ( '' !== $include ) {
 			if ( false !== strpos( $record, 'include:' . strtolower( $include ) ) ) {
 				/* translators: %s: meccanismo SPF del provider. */
-				return self::item( $label, 'ok', sprintf( __( 'Record SPF presente e include il provider selezionato (%s).', 'grs-smtp' ), $include ), $spf[0] );
+				return self::item( $label, 'ok', sprintf( __( 'SPF record present and includes the selected provider (%s).', 'grs-smtp' ), $include ), $spf[0] );
 			}
 			/* translators: %s: meccanismo SPF del provider. */
-			return self::item( $label, 'warn', sprintf( __( 'Record SPF presente ma non contiene "include:%s" richiesto dal provider selezionato.', 'grs-smtp' ), $include ), $spf[0] );
+			return self::item( $label, 'warn', sprintf( __( 'SPF record present but it does not contain "include:%s" required by the selected provider.', 'grs-smtp' ), $include ), $spf[0] );
 		}
 
-		return self::item( $label, 'ok', __( 'Record SPF presente e valido nella forma. Verifica con il provider che autorizzi il suo server di invio.', 'grs-smtp' ), $spf[0] );
+		return self::item( $label, 'ok', __( 'SPF record present and well formed. Check with the provider that it authorizes its sending server.', 'grs-smtp' ), $spf[0] );
 	}
 
 	/**
@@ -195,7 +195,7 @@ class Dns_Check {
 		}
 
 		if ( ! $dmarc ) {
-			return self::item( $label, 'warn', __( 'Nessun record DMARC. Gmail, Yahoo e Microsoft lo richiedono sempre più spesso: aggiungi almeno "v=DMARC1; p=none;" su _dmarc del dominio.', 'grs-smtp' ) );
+			return self::item( $label, 'warn', __( 'No DMARC record. Gmail, Yahoo and Microsoft increasingly require it: add at least "v=DMARC1; p=none;" on the domain\'s _dmarc.', 'grs-smtp' ) );
 		}
 
 		$policy = 'none';
@@ -204,7 +204,7 @@ class Dns_Check {
 		}
 
 		/* translators: %s: policy DMARC. */
-		return self::item( $label, 'ok', sprintf( __( 'Record DMARC presente (policy: %s).', 'grs-smtp' ), $policy ), $dmarc[0] );
+		return self::item( $label, 'ok', sprintf( __( 'DMARC record present (policy: %s).', 'grs-smtp' ), $policy ), $dmarc[0] );
 	}
 
 	/**
@@ -219,10 +219,10 @@ class Dns_Check {
 		$selector = strtolower( trim( (string) $selector ) );
 
 		if ( '' === $selector ) {
-			return self::item( $label, 'info', __( 'Per verificare la firma DKIM inserisci il selettore indicato dal provider (es. "default", "google", "selector1").', 'grs-smtp' ) );
+			return self::item( $label, 'info', __( 'To verify the DKIM signature enter the selector given by the provider (e.g. "default", "google", "selector1").', 'grs-smtp' ) );
 		}
 		if ( ! preg_match( '/^[a-z0-9._-]+$/', $selector ) ) {
-			return self::item( $label, 'error', __( 'Selettore non valido.', 'grs-smtp' ) );
+			return self::item( $label, 'error', __( 'Invalid selector.', 'grs-smtp' ) );
 		}
 
 		$name    = $selector . '._domainkey.' . $domain;
@@ -231,13 +231,13 @@ class Dns_Check {
 			foreach ( $records as $txt ) {
 				if ( false !== stripos( $txt, 'p=' ) ) {
 					/* translators: %s: nome DNS. */
-					return self::item( $label, 'ok', sprintf( __( 'Chiave DKIM trovata su %s.', 'grs-smtp' ), $name ), $txt );
+					return self::item( $label, 'ok', sprintf( __( 'DKIM key found on %s.', 'grs-smtp' ), $name ), $txt );
 				}
 			}
 		}
 
 		/* translators: %s: nome DNS. */
-		return self::item( $label, 'warn', sprintf( __( 'Nessuna chiave DKIM su %s. Controlla il selettore o attiva DKIM nel pannello del provider.', 'grs-smtp' ), $name ) );
+		return self::item( $label, 'warn', sprintf( __( 'No DKIM key on %s. Check the selector or enable DKIM in the provider\'s panel.', 'grs-smtp' ), $name ) );
 	}
 
 	/**

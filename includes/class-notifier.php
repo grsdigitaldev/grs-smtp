@@ -108,23 +108,23 @@ class Notifier {
 
 		$site = wp_specialchars_decode( (string) get_bloginfo( 'name' ), ENT_QUOTES );
 		/* translators: %s: nome del sito. */
-		$subject = sprintf( __( '[%s] Errore invio email (GRS SMTP)', 'grs-smtp' ), $site );
+		$subject = sprintf( __( '[%s] Email delivery error (GRS SMTP)', 'grs-smtp' ), $site );
 
 		$lines = array(
 			/* translators: %s: indirizzo del sito. */
-			sprintf( __( 'Sul sito %s un invio email non è riuscito.', 'grs-smtp' ), home_url() ),
+			sprintf( __( 'An email delivery failed on the site %s.', 'grs-smtp' ), home_url() ),
 			'',
 			/* translators: %s: data e ora. */
-			sprintf( __( 'Data: %s', 'grs-smtp' ), wp_date( 'd/m/Y H:i:s', (int) $state['last_time'] ) ),
+			sprintf( __( 'Date: %s', 'grs-smtp' ), wp_date( Plugin::datetime_format(), (int) $state['last_time'] ) ),
 			/* translators: %s: messaggio di errore. */
-			sprintf( __( 'Errore: %s', 'grs-smtp' ), $state['last_error'] ),
+			sprintf( __( 'Error: %s', 'grs-smtp' ), $state['last_error'] ),
 			/* translators: %d: numero di errori consecutivi. */
-			sprintf( __( 'Errori consecutivi: %d', 'grs-smtp' ), (int) $state['count'] ),
+			sprintf( __( 'Consecutive errors: %d', 'grs-smtp' ), (int) $state['count'] ),
 			'',
 			/* translators: %s: link al log. */
-			sprintf( __( 'Controlla il log: %s', 'grs-smtp' ), admin_url( 'admin.php?page=grs-smtp&tab=log&status=failed' ) ),
+			sprintf( __( 'Check the log: %s', 'grs-smtp' ), admin_url( 'admin.php?page=grs-smtp&tab=log&status=failed' ) ),
 			'',
-			__( 'Questo avviso è inviato con il metodo predefinito del server (senza SMTP) e al massimo una volta all\'ora: controlla anche lo spam.', 'grs-smtp' ),
+			__( 'This alert is sent with the server\'s default method (without SMTP) and at most once per hour: check your spam folder too.', 'grs-smtp' ),
 		);
 
 		self::$sending_alert = true;
@@ -156,16 +156,16 @@ class Notifier {
 		$log_url     = admin_url( 'admin.php?page=grs-smtp&tab=log&status=failed' );
 		$dismiss_url = wp_nonce_url( admin_url( 'admin-post.php?action=' . self::DISMISS_ACTION ), self::DISMISS_ACTION );
 
-		echo '<div class="notice notice-error"><p><strong>' . esc_html__( 'GRS SMTP: invio email non riuscito.', 'grs-smtp' ) . '</strong> ';
+		echo '<div class="notice notice-error"><p><strong>' . esc_html__( 'GRS SMTP: email delivery failed.', 'grs-smtp' ) . '</strong> ';
 		printf(
 			/* translators: 1: numero di errori, 2: data. */
-			esc_html__( 'Errori consecutivi: %1$d, ultimo il %2$s.', 'grs-smtp' ),
+			esc_html__( 'Consecutive errors: %1$d, last one on %2$s.', 'grs-smtp' ),
 			(int) $state['count'],
-			esc_html( wp_date( 'd/m/Y H:i', (int) $state['last_time'] ) )
+			esc_html( wp_date( Plugin::datetime_format(), (int) $state['last_time'] ) )
 		);
 		echo '<br><code>' . esc_html( $state['last_error'] ) . '</code></p><p>';
-		echo '<a class="button button-primary" href="' . esc_url( $log_url ) . '">' . esc_html__( 'Apri il log', 'grs-smtp' ) . '</a> ';
-		echo '<a class="button" href="' . esc_url( $dismiss_url ) . '">' . esc_html__( 'Nascondi', 'grs-smtp' ) . '</a>';
+		echo '<a class="button button-primary" href="' . esc_url( $log_url ) . '">' . esc_html__( 'Open the log', 'grs-smtp' ) . '</a> ';
+		echo '<a class="button" href="' . esc_url( $dismiss_url ) . '">' . esc_html__( 'Dismiss', 'grs-smtp' ) . '</a>';
 		echo '</p></div>';
 	}
 
@@ -176,7 +176,7 @@ class Notifier {
 	 */
 	public function dismiss() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'Permessi insufficienti.', 'grs-smtp' ), 403 );
+			wp_die( esc_html__( 'Insufficient permissions.', 'grs-smtp' ), 403 );
 		}
 		check_admin_referer( self::DISMISS_ACTION );
 

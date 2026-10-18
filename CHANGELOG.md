@@ -2,6 +2,17 @@
 
 Tutte le modifiche rilevanti a GRS SMTP. Formato [Keep a Changelog](https://keepachangelog.com/it/1.1.0/), versioni [SemVer](https://semver.org/lang/it/).
 
+## [1.3.0] - 2026-10-17
+
+### Aggiunto
+- Traduzione italiana inclusa in `languages/` (`grs-smtp-it_IT.po`, `.mo`, `.l10n.php`) e modello `grs-smtp.pot` aggiornato.
+- Componente condiviso GRS i18n 1.0.0 (`includes/grs-i18n/`): il nome mittente è registrato (contesto "GRS SMTP", nome "from_name") e tradotto nella lingua corrente con WPML String Translation, Polylang o GRS Loco. Senza sistemi di traduzione resta invariato.
+
+### Modificato
+- Tutti i testi del codice in inglese (interfaccia, avvisi, suggerimenti, preset, controllo DNS, privacy, email di test e di allarme, debug SMTP).
+- Date nel formato del sito (Impostazioni → Generali) invece di `d/m/Y`.
+- Esempio di configurazione in wp-config.php con valori generici in inglese.
+
 ## [1.2.0] - 2026-10-17
 
 ### Aggiunto

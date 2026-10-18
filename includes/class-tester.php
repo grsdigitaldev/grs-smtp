@@ -33,7 +33,7 @@ class Tester {
 		if ( Mailer::delivery_disabled() ) {
 			return array(
 				'success' => false,
-				'message' => __( 'Gli invii sono bloccati (modalità staging): disattivala per eseguire il test.', 'grs-smtp' ),
+				'message' => __( 'Delivery is blocked (staging mode): disable it to run the test.', 'grs-smtp' ),
 				'hint'    => '',
 				'debug'   => array(),
 			);
@@ -41,7 +41,7 @@ class Tester {
 
 		$site = wp_specialchars_decode( (string) get_bloginfo( 'name' ), ENT_QUOTES );
 		/* translators: %s: nome del sito. */
-		$subject = sprintf( __( 'Email di test da %s', 'grs-smtp' ), $site );
+		$subject = sprintf( __( 'Test email from %s', 'grs-smtp' ), $site );
 		$body    = $this->body( $site );
 		$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 
@@ -60,13 +60,13 @@ class Tester {
 			return array(
 				'success' => true,
 				/* translators: %s: indirizzo destinatario. */
-				'message' => sprintf( __( 'Email di test inviata a %s. Controlla la casella (anche lo spam).', 'grs-smtp' ), $to ),
-				'hint'    => Settings::is_configured() ? '' : __( 'Attenzione: SMTP non è configurato, l\'email è partita con il metodo predefinito del server.', 'grs-smtp' ),
+				'message' => sprintf( __( 'Test email sent to %s. Check the mailbox (spam folder too).', 'grs-smtp' ), $to ),
+				'hint'    => Settings::is_configured() ? '' : __( 'Warning: SMTP is not configured, the email was sent with the server\'s default method.', 'grs-smtp' ),
 				'debug'   => $debug,
 			);
 		}
 
-		$error = '' !== $this->error ? $this->error : __( 'Invio non riuscito.', 'grs-smtp' );
+		$error = '' !== $this->error ? $this->error : __( 'Delivery failed.', 'grs-smtp' );
 
 		return array(
 			'success' => false,
@@ -85,17 +85,17 @@ class Tester {
 	private function body( $site ) {
 		$settings = Settings::all();
 		$rows     = array(
-			__( 'Sito', 'grs-smtp' )      => home_url(),
-			__( 'Server', 'grs-smtp' )    => $settings['host'] . ':' . $settings['port'],
-			__( 'Cifratura', 'grs-smtp' ) => strtoupper( $settings['encryption'] ),
-			__( 'Mittente', 'grs-smtp' )  => Mailer::from_name() . ' <' . Mailer::from_email() . '>',
-			__( 'Data', 'grs-smtp' )      => wp_date( 'd/m/Y H:i:s' ),
+			__( 'Site', 'grs-smtp' )       => home_url(),
+			__( 'Server', 'grs-smtp' )     => $settings['host'] . ':' . $settings['port'],
+			__( 'Encryption', 'grs-smtp' ) => strtoupper( $settings['encryption'] ),
+			__( 'Sender', 'grs-smtp' )     => Mailer::from_name() . ' <' . Mailer::from_email() . '>',
+			__( 'Date', 'grs-smtp' )       => wp_date( Plugin::datetime_format() ),
 		);
 
 		$html  = '<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#1d2327;max-width:560px">';
-		$html .= '<h2 style="margin:0 0 12px">' . esc_html__( 'Funziona!', 'grs-smtp' ) . '</h2>';
+		$html .= '<h2 style="margin:0 0 12px">' . esc_html__( 'It works!', 'grs-smtp' ) . '</h2>';
 		/* translators: %s: nome del sito. */
-		$html .= '<p>' . esc_html( sprintf( __( 'Questa è un\'email di test inviata da %s tramite GRS SMTP.', 'grs-smtp' ), $site ) ) . '</p>';
+		$html .= '<p>' . esc_html( sprintf( __( 'This is a test email sent from %s through GRS SMTP.', 'grs-smtp' ), $site ) ) . '</p>';
 		$html .= '<table cellpadding="6" style="border-collapse:collapse;font-size:14px">';
 		foreach ( $rows as $label => $value ) {
 			$html .= '<tr><td style="color:#646970">' . esc_html( $label ) . '</td><td><strong>' . esc_html( $value ) . '</strong></td></tr>';
@@ -133,23 +133,23 @@ class Tester {
 		}
 
 		$map = array(
-			'could not authenticate'     => __( 'Credenziali rifiutate: controlla utente (di solito l\'indirizzo email completo) e password. Per Gmail serve una password per le app; per Microsoft 365 l\'SMTP autenticato deve essere abilitato.', 'grs-smtp' ),
-			'535'                        => __( 'Credenziali rifiutate dal server: controlla utente e password.', 'grs-smtp' ),
-			'5.7.30'                     => __( 'Microsoft ha disattivato l\'accesso SMTP con password per questa casella o tenant: va riabilitato dall\'amministratore Microsoft 365 o va usato un altro servizio di invio.', 'grs-smtp' ),
-			'5.7.139'                    => __( 'Microsoft 365: SMTP autenticato disabilitato per questa casella o tenant.', 'grs-smtp' ),
-			'certificate'                => __( 'Problema con il certificato SSL del server: verifica che l\'host corrisponda esattamente al nome del certificato (es. smtps.aruba.it, non mail.dominio.it).', 'grs-smtp' ),
-			'ssl operation failed'       => __( 'Errore SSL: probabilmente cifratura e porta non corrispondono. Usa SSL con porta 465 oppure TLS con porta 587.', 'grs-smtp' ),
-			'connection refused'         => __( 'Connessione rifiutata: porta errata o bloccata dall\'hosting. Prova 587 con TLS o 465 con SSL, oppure chiedi all\'hosting se le porte SMTP in uscita sono aperte.', 'grs-smtp' ),
-			'connection timed out'       => __( 'Il server non risponde: l\'hosting potrebbe bloccare le connessioni SMTP in uscita o l\'host è errato.', 'grs-smtp' ),
-			'getaddrinfo'                => __( 'Host non trovato: controlla il nome del server SMTP.', 'grs-smtp' ),
-			'smtp connect() failed'      => __( 'Connessione al server non riuscita: verifica host, porta e cifratura, e che l\'hosting non blocchi le porte SMTP in uscita.', 'grs-smtp' ),
-			'could not connect'          => __( 'Connessione al server non riuscita: verifica host, porta e cifratura, e che l\'hosting non blocchi le porte SMTP in uscita.', 'grs-smtp' ),
-			'sender address rejected'    => __( 'Il server rifiuta il mittente: usa come mittente lo stesso indirizzo dell\'account SMTP o un alias autorizzato.', 'grs-smtp' ),
-			'not owned by user'          => __( 'Il mittente non appartiene all\'account SMTP: usa lo stesso indirizzo dell\'account o un alias autorizzato.', 'grs-smtp' ),
-			'sendasdenied'               => __( 'Microsoft 365: l\'account non ha il permesso di inviare a nome del mittente indicato.', 'grs-smtp' ),
-			'recipients failed'          => __( 'Il server ha rifiutato uno o più destinatari: l\'indirizzo non esiste o non è accettato. Controlla che sia scritto correttamente.', 'grs-smtp' ),
-			'invalid address'            => __( 'Indirizzo email non valido (mittente o destinatario).', 'grs-smtp' ),
-			'could not instantiate mail' => __( 'SMTP non è attivo e il server non permette l\'invio con la funzione mail() di PHP: configura i dati SMTP.', 'grs-smtp' ),
+			'could not authenticate'     => __( 'Credentials rejected: check the username (usually the full email address) and password. Gmail requires an app password; Microsoft 365 requires authenticated SMTP to be enabled.', 'grs-smtp' ),
+			'535'                        => __( 'Credentials rejected by the server: check username and password.', 'grs-smtp' ),
+			'5.7.30'                     => __( 'Microsoft has disabled SMTP access with password for this mailbox or tenant: it must be re-enabled by the Microsoft 365 administrator, or another sending service must be used.', 'grs-smtp' ),
+			'5.7.139'                    => __( 'Microsoft 365: authenticated SMTP disabled for this mailbox or tenant.', 'grs-smtp' ),
+			'certificate'                => __( 'Problem with the server\'s SSL certificate: check that the host exactly matches the certificate name (e.g. smtps.aruba.it, not mail.domain.com).', 'grs-smtp' ),
+			'ssl operation failed'       => __( 'SSL error: encryption and port probably do not match. Use SSL with port 465 or TLS with port 587.', 'grs-smtp' ),
+			'connection refused'         => __( 'Connection refused: wrong port or blocked by the hosting. Try 587 with TLS or 465 with SSL, or ask the hosting whether outgoing SMTP ports are open.', 'grs-smtp' ),
+			'connection timed out'       => __( 'The server does not respond: the hosting may block outgoing SMTP connections or the host is wrong.', 'grs-smtp' ),
+			'getaddrinfo'                => __( 'Host not found: check the SMTP server name.', 'grs-smtp' ),
+			'smtp connect() failed'      => __( 'Connection to the server failed: check host, port and encryption, and that the hosting does not block outgoing SMTP ports.', 'grs-smtp' ),
+			'could not connect'          => __( 'Connection to the server failed: check host, port and encryption, and that the hosting does not block outgoing SMTP ports.', 'grs-smtp' ),
+			'sender address rejected'    => __( 'The server rejects the sender: use the same address as the SMTP account or an authorized alias as sender.', 'grs-smtp' ),
+			'not owned by user'          => __( 'The sender does not belong to the SMTP account: use the same address as the account or an authorized alias.', 'grs-smtp' ),
+			'sendasdenied'               => __( 'Microsoft 365: the account is not allowed to send on behalf of the given sender.', 'grs-smtp' ),
+			'recipients failed'          => __( 'The server rejected one or more recipients: the address does not exist or is not accepted. Check that it is spelled correctly.', 'grs-smtp' ),
+			'invalid address'            => __( 'Invalid email address (sender or recipient).', 'grs-smtp' ),
+			'could not instantiate mail' => __( 'SMTP is not active and the server does not allow sending with PHP\'s mail() function: configure the SMTP settings.', 'grs-smtp' ),
 		);
 
 		foreach ( $map as $needle => $hint ) {

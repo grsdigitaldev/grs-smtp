@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       GRS SMTP
  * Plugin URI:        https://grsdigital.it
- * Description:       Invia le email di WordPress tramite il server SMTP del dominio, con email di test, log degli invii, avvisi di errore e controllo DNS.
- * Version:           1.2.0
+ * Description:       Sends WordPress emails through the domain's SMTP server, with test email, delivery log, failure alerts and DNS check.
+ * Version:           1.3.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            GRS Digital
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRS_SMTP_VERSION', '1.2.0' );
+define( 'GRS_SMTP_VERSION', '1.3.0' );
 define( 'GRS_SMTP_FILE', __FILE__ );
 define( 'GRS_SMTP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'GRS_SMTP_URL', plugin_dir_url( __FILE__ ) );
@@ -29,7 +29,7 @@ if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
 	add_action(
 		'admin_notices',
 		static function () {
-			echo '<div class="notice notice-error"><p>' . esc_html__( 'GRS SMTP richiede PHP 7.4 o superiore. Il plugin non è attivo.', 'grs-smtp' ) . '</p></div>';
+			echo '<div class="notice notice-error"><p>' . esc_html__( 'GRS SMTP requires PHP 7.4 or higher. The plugin is not active.', 'grs-smtp' ) . '</p></div>';
 		}
 	);
 	return;
@@ -38,6 +38,8 @@ if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
 require_once GRS_SMTP_PATH . 'includes/autoload.php';
 // Menu condiviso "GRS DEVs": incluso a livello di file, viene caricata la copia più recente tra i plugin GRS attivi.
 require_once GRS_SMTP_PATH . 'includes/grs-devs/loader.php';
+// Ponte traduzioni "GRS i18n" per i testi delle impostazioni visibili ai destinatari (nome mittente).
+require_once GRS_SMTP_PATH . 'includes/grs-i18n/loader.php';
 
 register_activation_hook( __FILE__, array( 'GRSDigital\\Smtp\\Activator', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'GRSDigital\\Smtp\\Deactivator', 'deactivate' ) );

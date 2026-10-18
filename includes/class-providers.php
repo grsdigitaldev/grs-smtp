@@ -22,12 +22,12 @@ class Providers {
 	public static function all() {
 		$providers = array(
 			'custom'    => array(
-				'label' => __( 'Personalizzato', 'grs-smtp' ),
+				'label' => __( 'Custom', 'grs-smtp' ),
 				'host'  => '',
 				'port'  => 465,
 				'enc'   => 'ssl',
 				'spf'   => '',
-				'note'  => __( 'Inserisci i dati forniti dal provider della casella email.', 'grs-smtp' ),
+				'note'  => __( 'Enter the details provided by your mailbox provider.', 'grs-smtp' ),
 			),
 			'aruba'     => array(
 				'label' => 'Aruba',
@@ -35,7 +35,7 @@ class Providers {
 				'port'  => 465,
 				'enc'   => 'ssl',
 				'spf'   => '',
-				'note'  => __( 'Caselle su dominio. Per caselle @aruba.it usa smtp.aruba.it. Utente: indirizzo email completo.', 'grs-smtp' ),
+				'note'  => __( 'Mailboxes on your own domain. For @aruba.it mailboxes use smtp.aruba.it. Username: full email address.', 'grs-smtp' ),
 			),
 			'register'  => array(
 				'label' => 'Register.it',
@@ -43,7 +43,7 @@ class Providers {
 				'port'  => 465,
 				'enc'   => 'ssl',
 				'spf'   => '',
-				'note'  => __( 'Utente: indirizzo email completo.', 'grs-smtp' ),
+				'note'  => __( 'Username: full email address.', 'grs-smtp' ),
 			),
 			'google'    => array(
 				'label' => 'Gmail / Google Workspace',
@@ -51,7 +51,7 @@ class Providers {
 				'port'  => 587,
 				'enc'   => 'tls',
 				'spf'   => '_spf.google.com',
-				'note'  => __( 'Serve una "password per le app" (verifica in due passaggi attiva), non la password dell\'account.', 'grs-smtp' ),
+				'note'  => __( 'An "app password" is required (2-step verification enabled), not the account password.', 'grs-smtp' ),
 			),
 			'microsoft' => array(
 				'label' => 'Microsoft 365 / Outlook',
@@ -59,7 +59,7 @@ class Providers {
 				'port'  => 587,
 				'enc'   => 'tls',
 				'spf'   => 'spf.protection.outlook.com',
-				'note'  => __( 'Microsoft sta dismettendo l\'accesso SMTP con password: verifica che "SMTP autenticato" sia abilitato sulla casella e sul tenant.', 'grs-smtp' ),
+				'note'  => __( 'Microsoft is retiring SMTP access with password: check that "Authenticated SMTP" is enabled on the mailbox and on the tenant.', 'grs-smtp' ),
 			),
 			'brevo'     => array(
 				'label' => 'Brevo',
@@ -67,15 +67,15 @@ class Providers {
 				'port'  => 587,
 				'enc'   => 'tls',
 				'spf'   => 'spf.brevo.com',
-				'note'  => __( 'Utente: login SMTP indicato da Brevo. Password: chiave SMTP (non la chiave API). Configura DKIM del dominio in Brevo.', 'grs-smtp' ),
+				'note'  => __( 'Username: SMTP login given by Brevo. Password: SMTP key (not the API key). Set up the domain\'s DKIM in Brevo.', 'grs-smtp' ),
 			),
 			'hosting'   => array(
-				'label' => __( 'Hosting cPanel / Plesk (mail.dominio)', 'grs-smtp' ),
+				'label' => __( 'cPanel / Plesk hosting (mail.domain)', 'grs-smtp' ),
 				'host'  => 'mail.' . self::site_domain(),
 				'port'  => 465,
 				'enc'   => 'ssl',
 				'spf'   => '',
-				'note'  => __( 'Server di posta dell\'hosting del sito. Verifica il nome esatto nel pannello dell\'hosting.', 'grs-smtp' ),
+				'note'  => __( 'Mail server of the site\'s hosting. Check the exact name in the hosting panel.', 'grs-smtp' ),
 			),
 		);
 

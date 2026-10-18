@@ -203,7 +203,7 @@ class Settings {
 	 */
 	public static function failure_note() {
 		if ( self::get( 'auth' ) && self::password_unreadable() ) {
-			return __( 'La password SMTP salvata non è più leggibile perché le chiavi di sicurezza (SALT) di wp-config.php sono cambiate: inseriscila di nuovo in GRS DEVs → SMTP.', 'grs-smtp' );
+			return __( 'The saved SMTP password can no longer be read because the security keys (SALT) in wp-config.php have changed: enter it again in GRS DEVs → SMTP.', 'grs-smtp' );
 		}
 		return '';
 	}
@@ -308,7 +308,7 @@ class Settings {
 		if ( $out['alert_enabled'] && '' === $out['alert_email'] ) {
 			$out['alert_enabled'] = false;
 			if ( function_exists( 'add_settings_error' ) ) {
-				add_settings_error( self::OPTION, 'grs_smtp_alert_email', __( 'Avviso via email non attivato: inserisci un indirizzo valido.', 'grs-smtp' ) );
+				add_settings_error( self::OPTION, 'grs_smtp_alert_email', __( 'Email alert not enabled: enter a valid address.', 'grs-smtp' ) );
 			}
 		}
 

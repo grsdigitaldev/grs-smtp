@@ -8,6 +8,7 @@
 namespace GRSDigital\Smtp\Admin;
 
 use GRSDigital\Smtp\Logger;
+use GRSDigital\Smtp\Plugin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -40,11 +41,11 @@ class Log_Table extends \WP_List_Table {
 	 */
 	public static function statuses() {
 		return array(
-			Logger::STATUS_SENT        => __( 'Inviata', 'grs-smtp' ),
-			Logger::STATUS_FAILED      => __( 'Fallita', 'grs-smtp' ),
-			Logger::STATUS_BLOCKED     => __( 'Bloccata (staging)', 'grs-smtp' ),
-			Logger::STATUS_INTERCEPTED => __( 'Gestita da altro plugin', 'grs-smtp' ),
-			Logger::STATUS_PENDING     => __( 'Esito sconosciuto', 'grs-smtp' ),
+			Logger::STATUS_SENT        => __( 'Sent', 'grs-smtp' ),
+			Logger::STATUS_FAILED      => __( 'Failed', 'grs-smtp' ),
+			Logger::STATUS_BLOCKED     => __( 'Blocked (staging)', 'grs-smtp' ),
+			Logger::STATUS_INTERCEPTED => __( 'Handled by another plugin', 'grs-smtp' ),
+			Logger::STATUS_PENDING     => __( 'Unknown result', 'grs-smtp' ),
 		);
 	}
 
@@ -68,10 +69,10 @@ class Log_Table extends \WP_List_Table {
 	public function get_columns() {
 		return array(
 			'cb'         => '<input type="checkbox">',
-			'subject'    => __( 'Oggetto', 'grs-smtp' ),
-			'to_email'   => __( 'Destinatario', 'grs-smtp' ),
-			'status'     => __( 'Stato', 'grs-smtp' ),
-			'created_at' => __( 'Data', 'grs-smtp' ),
+			'subject'    => __( 'Subject', 'grs-smtp' ),
+			'to_email'   => __( 'Recipient', 'grs-smtp' ),
+			'status'     => __( 'Status', 'grs-smtp' ),
+			'created_at' => __( 'Date', 'grs-smtp' ),
 		);
 	}
 
@@ -95,7 +96,7 @@ class Log_Table extends \WP_List_Table {
 	 * @return array
 	 */
 	protected function get_bulk_actions() {
-		return array( 'bulk_delete' => __( 'Elimina', 'grs-smtp' ) );
+		return array( 'bulk_delete' => __( 'Delete', 'grs-smtp' ) );
 	}
 
 	/**
@@ -114,7 +115,7 @@ class Log_Table extends \WP_List_Table {
 			'<a href="%1$s"%2$s>%3$s <span class="count">(%4$d)</span></a>',
 			esc_url( $base ),
 			'' === $current ? ' class="current" aria-current="page"' : '',
-			esc_html__( 'Tutte', 'grs-smtp' ),
+			esc_html__( 'All', 'grs-smtp' ),
 			(int) $total
 		);
 
@@ -188,7 +189,7 @@ class Log_Table extends \WP_List_Table {
 	 * @return void
 	 */
 	public function no_items() {
-		esc_html_e( 'Nessuna email registrata.', 'grs-smtp' );
+		esc_html_e( 'No emails logged.', 'grs-smtp' );
 	}
 
 	/**
@@ -214,17 +215,17 @@ class Log_Table extends \WP_List_Table {
 				'view' => (int) $item->id,
 			)
 		);
-		$subject = '' !== (string) $item->subject ? (string) $item->subject : __( '(senza oggetto)', 'grs-smtp' );
+		$subject = '' !== (string) $item->subject ? (string) $item->subject : __( '(no subject)', 'grs-smtp' );
 
 		$actions = array(
-			'view'   => '<a href="' . esc_url( $view ) . '">' . esc_html__( 'Dettagli', 'grs-smtp' ) . '</a>',
-			'resend' => '<a href="' . esc_url( Admin::log_action_url( 'resend', (int) $item->id ) ) . '">' . esc_html__( 'Reinvia', 'grs-smtp' ) . '</a>',
-			'delete' => '<a class="grs-smtp__delete" data-grs-confirm="1" href="' . esc_url( Admin::log_action_url( 'delete', (int) $item->id ) ) . '">' . esc_html__( 'Elimina', 'grs-smtp' ) . '</a>',
+			'view'   => '<a href="' . esc_url( $view ) . '">' . esc_html__( 'Details', 'grs-smtp' ) . '</a>',
+			'resend' => '<a href="' . esc_url( Admin::log_action_url( 'resend', (int) $item->id ) ) . '">' . esc_html__( 'Resend', 'grs-smtp' ) . '</a>',
+			'delete' => '<a class="grs-smtp__delete" data-grs-confirm="1" href="' . esc_url( Admin::log_action_url( 'delete', (int) $item->id ) ) . '">' . esc_html__( 'Delete', 'grs-smtp' ) . '</a>',
 		);
 
 		$out = '<strong><a class="row-title" href="' . esc_url( $view ) . '">' . esc_html( $subject ) . '</a></strong>';
 		if ( (int) $item->resent_from > 0 ) {
-			$out .= ' <span class="grs-smtp__tag">' . esc_html__( 'reinvio', 'grs-smtp' ) . '</span>';
+			$out .= ' <span class="grs-smtp__tag">' . esc_html__( 'resend', 'grs-smtp' ) . '</span>';
 		}
 		return $out . $this->row_actions( $actions );
 	}
@@ -260,6 +261,6 @@ class Log_Table extends \WP_List_Table {
 	 * @return string
 	 */
 	protected function column_created_at( $item ) {
-		return esc_html( get_date_from_gmt( (string) $item->created_at, 'd/m/Y H:i:s' ) );
+		return esc_html( get_date_from_gmt( (string) $item->created_at, Plugin::datetime_format() ) );
 	}
 }

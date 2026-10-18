@@ -1,0 +1,1012 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GRS SMTP 1.3.0\n"
+"Report-Msgid-Bugs-To: info@grsdigital.it\n"
+"PO-Revision-Date: 2026-10-17 12:00+0000\n"
+"Last-Translator: GRS Digital <info@grsdigital.it>\n"
+"Language-Team: Italiano <info@grsdigital.it>\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: grs-smtp\n"
+
+#. Plugin Name of the plugin
+#: grs-smtp.php
+msgid "GRS SMTP"
+msgstr "GRS SMTP"
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: grs-smtp.php
+msgid "https://grsdigital.it"
+msgstr "https://grsdigital.it"
+
+#. Description of the plugin
+#: grs-smtp.php
+msgid "Sends WordPress emails through the domain's SMTP server, with test email, delivery log, failure alerts and DNS check."
+msgstr "Invia le email di WordPress tramite il server SMTP del dominio, con email di test, log degli invii, avvisi di errore e controllo DNS."
+
+#. Author of the plugin
+#: grs-smtp.php
+msgid "GRS Digital"
+msgstr "GRS Digital"
+
+#: grs-smtp.php:32
+msgid "GRS SMTP requires PHP 7.4 or higher. The plugin is not active."
+msgstr "GRS SMTP richiede PHP 7.4 o superiore. Il plugin non è attivo."
+
+#: includes/admin/class-admin.php:104
+msgid "Sends emails through the domain's SMTP server, with test, log and failure alerts."
+msgstr "Invio delle email tramite il server SMTP del dominio, con test, log e avvisi di errore."
+
+#: includes/admin/class-admin.php:131 includes/admin/class-admin.php:287
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: includes/admin/class-admin.php:168
+msgid "Sending…"
+msgstr "Invio in corso…"
+
+#: includes/admin/class-admin.php:169
+msgid "Request failed. Reload the page and try again."
+msgstr "Richiesta non riuscita. Ricarica la pagina e riprova."
+
+#: includes/admin/class-admin.php:170
+msgid "Technical connection details"
+msgstr "Dettaglio tecnico della connessione"
+
+#: includes/admin/class-admin.php:171
+msgid "What to check"
+msgstr "Cosa controllare"
+
+#: includes/admin/class-admin.php:172
+msgid "Permanently delete all log entries?"
+msgstr "Eliminare definitivamente tutte le righe del log?"
+
+#: includes/admin/class-admin.php:173
+msgid "Delete this email from the log?"
+msgstr "Eliminare questa email dal log?"
+
+#: includes/admin/class-admin.php:205 includes/admin/class-admin.php:586 includes/admin/class-admin.php:754 includes/class-notifier.php:179
+msgid "Insufficient permissions."
+msgstr "Permessi insufficienti."
+
+#: includes/admin/class-admin.php:243
+msgid "GRS SMTP: email delivery disabled (staging mode)."
+msgstr "GRS SMTP: invio email disattivato (modalità staging)."
+
+#: includes/admin/class-admin.php:243
+msgid "Emails are not delivered, only recorded in the log. Remember to enable them again on the production site."
+msgstr "Le email non vengono consegnate, solo registrate nel log. Ricordati di riattivarle sul sito in produzione."
+
+#: includes/admin/class-admin.php:247
+msgid "GRS SMTP: the saved password can no longer be read."
+msgstr "GRS SMTP: la password salvata non è più leggibile."
+
+#: includes/admin/class-admin.php:247
+msgid "This happens when the security keys in wp-config.php change (e.g. after a migration). Enter the SMTP password again."
+msgstr "Succede quando cambiano le chiavi di sicurezza di wp-config.php (es. dopo una migrazione). Inserisci di nuovo la password SMTP."
+
+#. translators: %s: elenco plugin.
+#: includes/admin/class-admin.php:253
+#, php-format
+msgid "GRS SMTP: %s is also active. Two SMTP plugins together can override each other: deactivate one of them."
+msgstr "GRS SMTP: è attivo anche %s. Due plugin SMTP insieme possono sovrascriversi a vicenda: disattivane uno."
+
+#: includes/admin/class-admin.php:257
+msgid "GRS SMTP is not configured yet: emails are sent with the server's default method."
+msgstr "GRS SMTP non è ancora configurato: le email partono con il metodo predefinito del server."
+
+#: includes/admin/class-admin.php:264
+msgid "Email resent."
+msgstr "Email reinviata."
+
+#: includes/admin/class-admin.php:265 includes/class-logger.php:421
+msgid "Resend failed: check the log for details."
+msgstr "Reinvio non riuscito: controlla il log per il dettaglio."
+
+#: includes/admin/class-admin.php:266 includes/class-logger.php:406
+msgid "The content of this email was not saved: it cannot be resent."
+msgstr "Il contenuto di questa email non è stato salvato: impossibile reinviarla."
+
+#: includes/admin/class-admin.php:267
+msgid "Entries deleted."
+msgstr "Righe eliminate."
+
+#: includes/admin/class-admin.php:268
+msgid "Log cleared."
+msgstr "Log svuotato."
+
+#: includes/admin/class-admin.php:288
+msgid "Test email"
+msgstr "Email di test"
+
+#: includes/admin/class-admin.php:289 includes/admin/class-admin.php:512
+msgid "Log"
+msgstr "Log"
+
+#: includes/admin/class-admin.php:290
+msgid "Diagnostics"
+msgstr "Diagnostica"
+
+#: includes/admin/class-admin.php:305
+msgid "Sends the site's emails through the domain's SMTP server."
+msgstr "Invio delle email del sito tramite il server SMTP del dominio."
+
+#: includes/admin/class-admin.php:335
+msgid "Developed by"
+msgstr "Sviluppato da"
+
+#: includes/admin/class-admin.php:347
+msgid "Delivery blocked"
+msgstr "Invii bloccati"
+
+#: includes/admin/class-admin.php:350
+msgid "Not configured"
+msgstr "Non configurato"
+
+#: includes/admin/class-admin.php:354
+msgid "Last delivery failed"
+msgstr "Ultimo invio fallito"
+
+#: includes/admin/class-admin.php:356 includes/admin/class-admin.php:849
+msgid "Active"
+msgstr "Attivo"
+
+#: includes/admin/class-admin.php:367
+msgid "Defined in wp-config.php."
+msgstr "Definito in wp-config.php."
+
+#: includes/admin/class-admin.php:426
+msgid "SMTP server"
+msgstr "Server SMTP"
+
+#: includes/admin/class-admin.php:429
+msgid "Provider"
+msgstr "Provider"
+
+#: includes/admin/class-admin.php:439
+msgid "Server (host)"
+msgstr "Server (host)"
+
+#: includes/admin/class-admin.php:440
+msgid "E.g. smtps.aruba.it"
+msgstr "Es. smtps.aruba.it"
+
+#: includes/admin/class-admin.php:443 includes/class-tester.php:90
+msgid "Encryption"
+msgstr "Cifratura"
+
+#: includes/admin/class-admin.php:446
+msgid "SSL (port 465)"
+msgstr "SSL (porta 465)"
+
+#: includes/admin/class-admin.php:447
+msgid "TLS / STARTTLS (port 587)"
+msgstr "TLS / STARTTLS (porta 587)"
+
+#: includes/admin/class-admin.php:448
+msgid "None"
+msgstr "Nessuna"
+
+#: includes/admin/class-admin.php:456
+msgid "Port"
+msgstr "Porta"
+
+#: includes/admin/class-admin.php:460
+msgid "Auto TLS"
+msgstr "TLS automatico"
+
+#: includes/admin/class-admin.php:461
+msgid "Use TLS if the server offers it"
+msgstr "Usa TLS se il server lo offre"
+
+#: includes/admin/class-admin.php:461
+msgid "Leave enabled. Disable only if the server advertises TLS but its certificate is not valid."
+msgstr "Lascia attivo. Disattiva solo se il server dichiara TLS ma il certificato non è valido."
+
+#: includes/admin/class-admin.php:464
+msgid "Authentication"
+msgstr "Autenticazione"
+
+#: includes/admin/class-admin.php:465
+msgid "The server requires a username and password"
+msgstr "Il server richiede utente e password"
+
+#: includes/admin/class-admin.php:468
+msgid "Username"
+msgstr "Utente"
+
+#: includes/admin/class-admin.php:469
+msgid "Usually the full email address."
+msgstr "Di solito l'indirizzo email completo."
+
+#: includes/admin/class-admin.php:472
+msgid "Password"
+msgstr "Password"
+
+#: includes/admin/class-admin.php:475
+msgid "Set in wp-config.php."
+msgstr "Definita in wp-config.php."
+
+#: includes/admin/class-admin.php:477
+msgid "•••••••• (saved, leave empty to keep it)"
+msgstr "•••••••• (salvata, lascia vuoto per non cambiarla)"
+
+#: includes/admin/class-admin.php:480
+msgid "Remove the saved password"
+msgstr "Rimuovi la password salvata"
+
+#: includes/admin/class-admin.php:482
+msgid "Stored encrypted in the database. Alternatively, define it in wp-config.php with the GRS_SMTP_PASS constant."
+msgstr "Salvata cifrata nel database. In alternativa definiscila in wp-config.php con la costante GRS_SMTP_PASS."
+
+#: includes/admin/class-admin.php:482
+msgid "OpenSSL is not available on this server: the password is only stored obfuscated. Better to define it in wp-config.php with the GRS_SMTP_PASS constant."
+msgstr "OpenSSL non è disponibile su questo server: la password viene salvata solo offuscata. Meglio definirla in wp-config.php con la costante GRS_SMTP_PASS."
+
+#: includes/admin/class-admin.php:490 includes/class-tester.php:91
+msgid "Sender"
+msgstr "Mittente"
+
+#: includes/admin/class-admin.php:492
+msgid "From email"
+msgstr "Email mittente"
+
+#: includes/admin/class-admin.php:493
+msgid "Use an address on the client's domain, ideally the same as the SMTP username. If empty, the SMTP username is used."
+msgstr "Usa un indirizzo del dominio del cliente, meglio se uguale all'utente SMTP. Se vuoto viene usato l'utente SMTP."
+
+#: includes/admin/class-admin.php:495
+msgid "Force this address for all emails"
+msgstr "Forza questo indirizzo per tutte le email"
+
+#: includes/admin/class-admin.php:495
+msgid "Recommended: prevents third-party plugins from using senders the SMTP server would reject. If disabled, only the default wordpress@ address is replaced."
+msgstr "Consigliato: evita che plugin di terze parti usino mittenti che il server SMTP rifiuterebbe. Se disattivato viene sostituito solo l'indirizzo predefinito wordpress@."
+
+#: includes/admin/class-admin.php:498
+msgid "From name"
+msgstr "Nome mittente"
+
+#. translators: %s: nome del sito.
+#: includes/admin/class-admin.php:500
+#, php-format
+msgid "E.g. the company name. If empty, the site name (%s) is used, never \"WordPress\"."
+msgstr "Es. il nome dell'azienda. Se vuoto viene usato il nome del sito (%s), mai \"WordPress\"."
+
+#: includes/admin/class-admin.php:502
+msgid "Force this name for all emails"
+msgstr "Forza questo nome per tutte le email"
+
+#: includes/admin/class-admin.php:502
+msgid "If disabled, plugins that set their own name (e.g. WooCommerce) keep it; only \"WordPress\" is replaced."
+msgstr "Se disattivato i plugin che impostano un loro nome (es. WooCommerce) lo mantengono; viene sostituito solo \"WordPress\"."
+
+#: includes/admin/class-admin.php:505
+msgid "Return-Path"
+msgstr "Return-Path"
+
+#: includes/admin/class-admin.php:506
+msgid "Align the Return-Path with the sender"
+msgstr "Allinea il Return-Path al mittente"
+
+#: includes/admin/class-admin.php:506
+msgid "Bounce notifications go back to the sender address."
+msgstr "Le notifiche di mancata consegna tornano all'indirizzo mittente."
+
+#: includes/admin/class-admin.php:514
+msgid "Email log"
+msgstr "Registro invii"
+
+#: includes/admin/class-admin.php:515
+msgid "Log sent emails"
+msgstr "Registra le email inviate"
+
+#: includes/admin/class-admin.php:517
+msgid "Also save the content"
+msgstr "Salva anche il contenuto"
+
+#: includes/admin/class-admin.php:517
+msgid "Required to view the text and resend. Emails may contain personal data and password reset links: keep retention short."
+msgstr "Necessario per vedere il testo e reinviare. Le email possono contenere dati personali e link di reset password: tieni la conservazione breve."
+
+#: includes/admin/class-admin.php:520
+msgid "Retention"
+msgstr "Conservazione"
+
+#. translators: %d: numero di giorni.
+#: includes/admin/class-admin.php:524
+msgid "Never delete"
+msgstr "Non eliminare mai"
+
+#. translators: %d: numero di giorni.
+#: includes/admin/class-admin.php:524
+#, php-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d giorno"
+msgstr[1] "%d giorni"
+
+#: includes/admin/class-admin.php:532
+msgid "Failure alerts"
+msgstr "Avvisi di errore"
+
+#: includes/admin/class-admin.php:534
+msgid "Email alert"
+msgstr "Avviso via email"
+
+#: includes/admin/class-admin.php:535
+msgid "Alert me when a delivery fails"
+msgstr "Avvisami quando un invio fallisce"
+
+#: includes/admin/class-admin.php:535
+msgid "At most one alert per hour, sent without SMTP. An admin notice is shown in the dashboard anyway."
+msgstr "Massimo un avviso all'ora, inviato senza SMTP. In bacheca compare comunque un avviso agli amministratori."
+
+#: includes/admin/class-admin.php:537
+msgid "Address that receives the alerts (preferably on another domain, e.g. your support address)."
+msgstr "Indirizzo che riceve gli avvisi (meglio di un altro dominio, es. il tuo di assistenza)."
+
+#: includes/admin/class-admin.php:543
+msgid "Advanced"
+msgstr "Avanzate"
+
+#: includes/admin/class-admin.php:545
+msgid "Staging mode"
+msgstr "Modalità staging"
+
+#: includes/admin/class-admin.php:546
+msgid "Block all deliveries"
+msgstr "Blocca tutti gli invii"
+
+#: includes/admin/class-admin.php:546
+msgid "For development copies of the site: no email is delivered, they are only kept in the log. Plugins see the delivery as successful."
+msgstr "Per copie di sviluppo del sito: nessuna email viene consegnata, restano solo nel log. Ai plugin l'invio risulta riuscito."
+
+#: includes/admin/class-admin.php:548
+msgid "Uninstall"
+msgstr "Disinstallazione"
+
+#: includes/admin/class-admin.php:549
+msgid "Keep settings and log if the plugin is deleted"
+msgstr "Conserva impostazioni e log se il plugin viene eliminato"
+
+#: includes/admin/class-admin.php:553
+msgid "Save settings"
+msgstr "Salva impostazioni"
+
+#: includes/admin/class-admin.php:566
+msgid "Send a test email"
+msgstr "Invia un'email di test"
+
+#: includes/admin/class-admin.php:567
+msgid "Check that the settings work. If there is an error, you will see what to check and the connection details (credentials and content are hidden)."
+msgstr "Verifica che le impostazioni funzionino. In caso di errore ti mostro cosa controllare e il dettaglio della connessione (credenziali e contenuto sono nascosti)."
+
+#: includes/admin/class-admin.php:569 includes/admin/class-admin.php:671 includes/admin/class-log-table.php:73 includes/class-privacy.php:79
+msgid "Recipient"
+msgstr "Destinatario"
+
+#: includes/admin/class-admin.php:571
+msgid "Send test"
+msgstr "Invia test"
+
+#: includes/admin/class-admin.php:574
+msgid "Tip: to also check SPF, DKIM and spam score, send the test to the address provided by mail-tester.com."
+msgstr "Suggerimento: per controllare anche SPF, DKIM e punteggio spam invia il test all'indirizzo che ti fornisce mail-tester.com."
+
+#: includes/admin/class-admin.php:591
+msgid "Invalid email address."
+msgstr "Indirizzo email non valido."
+
+#: includes/admin/class-admin.php:616
+msgid "The log is disabled in the settings: new emails are not recorded."
+msgstr "Il log è disattivato nelle impostazioni: le nuove email non vengono registrate."
+
+#: includes/admin/class-admin.php:627
+msgid "Search"
+msgstr "Cerca"
+
+#: includes/admin/class-admin.php:636
+msgid "Clear the whole log"
+msgstr "Svuota tutto il log"
+
+#. translators: %d: giorni.
+#: includes/admin/class-admin.php:640
+#, php-format
+msgid "Entries older than %d days are deleted automatically."
+msgstr "Le righe più vecchie di %d giorni vengono eliminate automaticamente."
+
+#: includes/admin/class-admin.php:653
+msgid "Back to the log"
+msgstr "Torna al log"
+
+#: includes/admin/class-admin.php:656 includes/class-logger.php:403
+msgid "Email not found in the log."
+msgstr "Email non trovata nel log."
+
+#: includes/admin/class-admin.php:665 includes/admin/class-log-table.php:75 includes/class-tester.php:92
+msgid "Date"
+msgstr "Data"
+
+#: includes/admin/class-admin.php:666 includes/admin/class-admin.php:861 includes/admin/class-log-table.php:74 includes/class-privacy.php:87
+msgid "Status"
+msgstr "Stato"
+
+#: includes/admin/class-admin.php:669 includes/admin/class-admin.php:888
+msgid "Error"
+msgstr "Errore"
+
+#: includes/admin/class-admin.php:672 includes/admin/class-log-table.php:72 includes/class-privacy.php:83
+msgid "Subject"
+msgstr "Oggetto"
+
+#: includes/admin/class-admin.php:674
+msgid "Headers"
+msgstr "Intestazioni"
+
+#: includes/admin/class-admin.php:677
+msgid "Attachments"
+msgstr "Allegati"
+
+#: includes/admin/class-admin.php:679
+msgid "file no longer available"
+msgstr "file non più presente"
+
+#: includes/admin/class-admin.php:684
+msgid "Resend of"
+msgstr "Reinvio di"
+
+#: includes/admin/class-admin.php:695
+msgid "Content"
+msgstr "Contenuto"
+
+#: includes/admin/class-admin.php:698
+msgid "Content not saved (option disabled)."
+msgstr "Contenuto non salvato (opzione disattivata)."
+
+#: includes/admin/class-admin.php:701
+msgid "Email preview"
+msgstr "Anteprima email"
+
+#: includes/admin/class-admin.php:708 includes/admin/class-log-table.php:222
+msgid "Resend"
+msgstr "Reinvia"
+
+#: includes/admin/class-admin.php:710 includes/admin/class-log-table.php:99 includes/admin/class-log-table.php:223
+msgid "Delete"
+msgstr "Elimina"
+
+#: includes/admin/class-admin.php:784
+msgid "Invalid action."
+msgstr "Azione non valida."
+
+#: includes/admin/class-admin.php:802
+msgid "DNS check of the sender domain"
+msgstr "Controllo DNS del dominio mittente"
+
+#: includes/admin/class-admin.php:805
+msgid "Configure the from email or the SMTP username first."
+msgstr "Configura prima l'email mittente o l'utente SMTP."
+
+#. translators: %s: dominio.
+#: includes/admin/class-admin.php:818
+#, php-format
+msgid "Domain checked: %s"
+msgstr "Dominio controllato: %s"
+
+#: includes/admin/class-admin.php:819
+msgid "DKIM selector (optional)"
+msgstr "Selettore DKIM (facoltativo)"
+
+#: includes/admin/class-admin.php:821
+msgid "Run check"
+msgstr "Esegui controllo"
+
+#: includes/admin/class-admin.php:835
+msgid "Basic check. For a complete check send a test to mail-tester.com."
+msgstr "Controllo di base. Per una verifica completa invia un test a mail-tester.com."
+
+#: includes/admin/class-admin.php:848
+msgid "SMTP configured"
+msgstr "SMTP configurato"
+
+#: includes/admin/class-admin.php:848
+msgid "No"
+msgstr "No"
+
+#: includes/admin/class-admin.php:849
+msgid "Email delivery"
+msgstr "Invio email"
+
+#: includes/admin/class-admin.php:849
+msgid "Blocked (staging mode)"
+msgstr "Bloccato (modalità staging)"
+
+#: includes/admin/class-admin.php:850
+msgid "Password encryption"
+msgstr "Cifratura password"
+
+#: includes/admin/class-admin.php:850
+msgid "OpenSSL not available"
+msgstr "OpenSSL non disponibile"
+
+#: includes/admin/class-admin.php:851
+msgid "Saved password"
+msgstr "Password salvata"
+
+#: includes/admin/class-admin.php:851
+msgid "Unreadable: enter it again"
+msgstr "Non leggibile: inseriscila di nuovo"
+
+#: includes/admin/class-admin.php:851
+msgid "Present"
+msgstr "Presente"
+
+#: includes/admin/class-admin.php:851
+msgid "Missing"
+msgstr "Assente"
+
+#: includes/admin/class-admin.php:852
+msgid "Other SMTP plugins"
+msgstr "Altri plugin SMTP"
+
+#: includes/admin/class-admin.php:852
+msgid "None found"
+msgstr "Nessuno"
+
+#: includes/admin/class-admin.php:853
+msgid "wp_mail() function"
+msgstr "Funzione wp_mail()"
+
+#. translators: %s: file.
+#: includes/admin/class-admin.php:853
+#, php-format
+msgid "Replaced by %s: GRS SMTP may not be used."
+msgstr "Sostituita da %s: GRS SMTP potrebbe non essere usato."
+
+#. translators: %s: file.
+#: includes/admin/class-admin.php:853
+msgid "WordPress original"
+msgstr "Originale di WordPress"
+
+#. translators: %s: file.
+#: includes/admin/class-admin.php:854
+msgid "Consecutive errors"
+msgstr "Errori consecutivi"
+
+#: includes/admin/class-admin.php:855
+msgid "Automatic log cleanup"
+msgstr "Pulizia automatica log"
+
+#: includes/admin/class-admin.php:855
+msgid "Not scheduled"
+msgstr "Non pianificata"
+
+#: includes/admin/class-admin.php:856
+msgid "Automatic updates"
+msgstr "Aggiornamenti automatici"
+
+#: includes/admin/class-admin.php:856
+msgid "Not set up"
+msgstr "Non configurati"
+
+#: includes/admin/class-admin.php:857
+msgid "Versions"
+msgstr "Versioni"
+
+#: includes/admin/class-admin.php:871
+msgid "Configuration from wp-config.php (optional)"
+msgstr "Configurazione da wp-config.php (facoltativa)"
+
+#: includes/admin/class-admin.php:872
+msgid "Useful to avoid storing the password in the database or to lock the settings. Defined constants take precedence over the fields."
+msgstr "Utile per non salvare la password nel database o per bloccare le impostazioni. Le costanti definite hanno la precedenza sui campi."
+
+#: includes/admin/class-admin.php:886
+msgid "OK"
+msgstr "OK"
+
+#: includes/admin/class-admin.php:887
+msgid "Warning"
+msgstr "Attenzione"
+
+#: includes/admin/class-admin.php:889
+msgid "Info"
+msgstr "Info"
+
+#: includes/admin/class-log-table.php:44
+msgid "Sent"
+msgstr "Inviata"
+
+#: includes/admin/class-log-table.php:45
+msgid "Failed"
+msgstr "Fallita"
+
+#: includes/admin/class-log-table.php:46
+msgid "Blocked (staging)"
+msgstr "Bloccata (staging)"
+
+#: includes/admin/class-log-table.php:47
+msgid "Handled by another plugin"
+msgstr "Gestita da altro plugin"
+
+#: includes/admin/class-log-table.php:48
+msgid "Unknown result"
+msgstr "Esito sconosciuto"
+
+#: includes/admin/class-log-table.php:118
+msgid "All"
+msgstr "Tutte"
+
+#: includes/admin/class-log-table.php:192
+msgid "No emails logged."
+msgstr "Nessuna email registrata."
+
+#: includes/admin/class-log-table.php:218
+msgid "(no subject)"
+msgstr "(senza oggetto)"
+
+#: includes/admin/class-log-table.php:221
+msgid "Details"
+msgstr "Dettagli"
+
+#: includes/admin/class-log-table.php:228
+msgid "resend"
+msgstr "reinvio"
+
+#: includes/class-dns-check.php:29
+msgid "Sender domain"
+msgstr "Dominio mittente"
+
+#: includes/class-dns-check.php:29
+msgid "No sender address configured."
+msgstr "Nessun indirizzo mittente configurato."
+
+#: includes/class-dns-check.php:34 includes/class-dns-check.php:41
+msgid "DNS"
+msgstr "DNS"
+
+#: includes/class-dns-check.php:34
+msgid "The server does not allow DNS queries from PHP (dns_get_record not available). Use an external tool such as MXToolbox."
+msgstr "Il server non permette interrogazioni DNS da PHP (dns_get_record non disponibile). Usa uno strumento esterno come MXToolbox."
+
+#: includes/class-dns-check.php:41
+msgid "Unable to query the domain's DNS from this server (resolution blocked or domain does not exist). Check SPF, DKIM and DMARC with an external tool such as MXToolbox."
+msgstr "Impossibile interrogare il DNS del dominio da questo server (risoluzione bloccata o dominio inesistente). Verifica SPF, DKIM e DMARC con uno strumento esterno come MXToolbox."
+
+#: includes/class-dns-check.php:97
+msgid "Sender and SMTP account"
+msgstr "Mittente e account SMTP"
+
+#: includes/class-dns-check.php:101
+msgid "The SMTP username is not an email address: check with the provider that it can send on behalf of the sender domain."
+msgstr "L'utente SMTP non è un indirizzo email: verifica con il provider che possa inviare a nome del dominio mittente."
+
+#: includes/class-dns-check.php:106
+msgid "The sender uses the same domain as the SMTP account."
+msgstr "Il mittente usa lo stesso dominio dell'account SMTP."
+
+#. translators: 1: dominio mittente, 2: dominio account SMTP.
+#: includes/class-dns-check.php:114
+#, php-format
+msgid "The sender (@%1$s) differs from the SMTP account (@%2$s). Many providers reject these emails or mark them as spam: use a sender on the same domain or authorize it with the provider."
+msgstr "Il mittente (@%1$s) è diverso dall'account SMTP (@%2$s). Molti provider rifiutano o segnano come spam queste email: usa un mittente dello stesso dominio o autorizzalo nel provider."
+
+#: includes/class-dns-check.php:132
+msgid "Unable to query DNS right now."
+msgstr "Impossibile interrogare il DNS in questo momento."
+
+#: includes/class-dns-check.php:145
+msgid "No SPF record found. Add one that authorizes the SMTP server in use (ask your email provider for the value)."
+msgstr "Nessun record SPF trovato. Aggiungine uno che autorizzi il server SMTP usato (chiedi il valore al provider della posta)."
+
+#: includes/class-dns-check.php:148
+msgid "There are multiple SPF records: this is an error and providers treat them as invalid. Merge them into a single record."
+msgstr "Ci sono più record SPF: è un errore, i provider li considerano non validi. Uniscili in un unico record."
+
+#: includes/class-dns-check.php:154
+msgid "The SPF record ends with \"+all\": it authorizes anyone to send on behalf of the domain. Use \"~all\" or \"-all\"."
+msgstr "Il record SPF termina con \"+all\": autorizza chiunque a inviare a nome del dominio. Usa \"~all\" o \"-all\"."
+
+#: includes/class-dns-check.php:159
+msgid "The SPF record exceeds the limit of 10 DNS lookups: it is treated as invalid."
+msgstr "Il record SPF supera il limite di 10 interrogazioni DNS: viene considerato non valido."
+
+#. translators: %s: meccanismo SPF del provider.
+#: includes/class-dns-check.php:169
+#, php-format
+msgid "SPF record present and includes the selected provider (%s)."
+msgstr "Record SPF presente e include il provider selezionato (%s)."
+
+#. translators: %s: meccanismo SPF del provider.
+#: includes/class-dns-check.php:172
+#, php-format
+msgid "SPF record present but it does not contain \"include:%s\" required by the selected provider."
+msgstr "Record SPF presente ma non contiene \"include:%s\" richiesto dal provider selezionato."
+
+#: includes/class-dns-check.php:175
+msgid "SPF record present and well formed. Check with the provider that it authorizes its sending server."
+msgstr "Record SPF presente e valido nella forma. Verifica con il provider che autorizzi il suo server di invio."
+
+#: includes/class-dns-check.php:198
+msgid "No DMARC record. Gmail, Yahoo and Microsoft increasingly require it: add at least \"v=DMARC1; p=none;\" on the domain's _dmarc."
+msgstr "Nessun record DMARC. Gmail, Yahoo e Microsoft lo richiedono sempre più spesso: aggiungi almeno \"v=DMARC1; p=none;\" su _dmarc del dominio."
+
+#. translators: %s: policy DMARC.
+#: includes/class-dns-check.php:207
+#, php-format
+msgid "DMARC record present (policy: %s)."
+msgstr "Record DMARC presente (policy: %s)."
+
+#: includes/class-dns-check.php:222
+msgid "To verify the DKIM signature enter the selector given by the provider (e.g. \"default\", \"google\", \"selector1\")."
+msgstr "Per verificare la firma DKIM inserisci il selettore indicato dal provider (es. \"default\", \"google\", \"selector1\")."
+
+#: includes/class-dns-check.php:225
+msgid "Invalid selector."
+msgstr "Selettore non valido."
+
+#. translators: %s: nome DNS.
+#: includes/class-dns-check.php:234
+#, php-format
+msgid "DKIM key found on %s."
+msgstr "Chiave DKIM trovata su %s."
+
+#. translators: %s: nome DNS.
+#: includes/class-dns-check.php:240
+#, php-format
+msgid "No DKIM key on %s. Check the selector or enable DKIM in the provider's panel."
+msgstr "Nessuna chiave DKIM su %s. Controlla il selettore o attiva DKIM nel pannello del provider."
+
+#: includes/class-logger.php:123
+msgid "Delivery handled by another plugin (pre_wp_mail filter)."
+msgstr "Invio gestito da un altro plugin (filtro pre_wp_mail)."
+
+#: includes/class-logger.php:145
+msgid "Unknown error."
+msgstr "Errore sconosciuto."
+
+#: includes/class-mailer.php:208
+msgid "[credentials hidden]"
+msgstr "[credenziali nascoste]"
+
+#: includes/class-mailer.php:219
+msgid "[content hidden]"
+msgstr "[contenuto nascosto]"
+
+#. translators: %s: nome del sito.
+#: includes/class-notifier.php:111
+#, php-format
+msgid "[%s] Email delivery error (GRS SMTP)"
+msgstr "[%s] Errore invio email (GRS SMTP)"
+
+#. translators: %s: indirizzo del sito.
+#: includes/class-notifier.php:115
+#, php-format
+msgid "An email delivery failed on the site %s."
+msgstr "Sul sito %s un invio email non è riuscito."
+
+#. translators: %s: data e ora.
+#: includes/class-notifier.php:118
+#, php-format
+msgid "Date: %s"
+msgstr "Data: %s"
+
+#. translators: %s: messaggio di errore.
+#: includes/class-notifier.php:120
+#, php-format
+msgid "Error: %s"
+msgstr "Errore: %s"
+
+#. translators: %d: numero di errori consecutivi.
+#: includes/class-notifier.php:122
+#, php-format
+msgid "Consecutive errors: %d"
+msgstr "Errori consecutivi: %d"
+
+#. translators: %s: link al log.
+#: includes/class-notifier.php:125
+#, php-format
+msgid "Check the log: %s"
+msgstr "Controlla il log: %s"
+
+#: includes/class-notifier.php:127
+msgid "This alert is sent with the server's default method (without SMTP) and at most once per hour: check your spam folder too."
+msgstr "Questo avviso è inviato con il metodo predefinito del server (senza SMTP) e al massimo una volta all'ora: controlla anche lo spam."
+
+#: includes/class-notifier.php:159
+msgid "GRS SMTP: email delivery failed."
+msgstr "GRS SMTP: invio email non riuscito."
+
+#. translators: 1: numero di errori, 2: data.
+#: includes/class-notifier.php:162
+#, php-format
+msgid "Consecutive errors: %1$d, last one on %2$s."
+msgstr "Errori consecutivi: %1$d, ultimo il %2$s."
+
+#: includes/class-notifier.php:167
+msgid "Open the log"
+msgstr "Apri il log"
+
+#: includes/class-notifier.php:168
+msgid "Dismiss"
+msgstr "Nascondi"
+
+#: includes/class-plugin.php:190
+msgid "Emails blocked"
+msgstr "Email bloccate"
+
+#: includes/class-plugin.php:193
+msgid "GRS SMTP: email delivery disabled (staging mode)"
+msgstr "GRS SMTP: invio email disattivato (modalità staging)"
+
+#: includes/class-privacy.php:36 includes/class-privacy.php:50
+msgid "Email log (GRS SMTP)"
+msgstr "Log email (GRS SMTP)"
+
+#: includes/class-privacy.php:71
+msgid "Emails sent by the site"
+msgstr "Email inviate dal sito"
+
+#: includes/class-privacy.php:75
+msgid "Date (UTC)"
+msgstr "Data (UTC)"
+
+#: includes/class-privacy.php:132
+msgid "Emails sent by the site (for example form confirmations, notifications and password recovery) are transmitted through the domain's mail server. For technical and support purposes the site keeps a log of deliveries (recipient, subject, content, date and result) for a limited period, after which the data is deleted automatically."
+msgstr "Le email inviate dal sito (ad esempio conferme dei moduli, notifiche e recupero password) vengono trasmesse tramite il server di posta del dominio. Per finalità tecniche e di assistenza il sito conserva un registro degli invii (destinatario, oggetto, contenuto, data ed esito) per un periodo limitato, al termine del quale i dati vengono eliminati automaticamente."
+
+#: includes/class-providers.php:25
+msgid "Custom"
+msgstr "Personalizzato"
+
+#: includes/class-providers.php:30
+msgid "Enter the details provided by your mailbox provider."
+msgstr "Inserisci i dati forniti dal provider della casella email."
+
+#: includes/class-providers.php:38
+msgid "Mailboxes on your own domain. For @aruba.it mailboxes use smtp.aruba.it. Username: full email address."
+msgstr "Caselle su dominio. Per caselle @aruba.it usa smtp.aruba.it. Utente: indirizzo email completo."
+
+#: includes/class-providers.php:46
+msgid "Username: full email address."
+msgstr "Utente: indirizzo email completo."
+
+#: includes/class-providers.php:54
+msgid "An \"app password\" is required (2-step verification enabled), not the account password."
+msgstr "Serve una \"password per le app\" (verifica in due passaggi attiva), non la password dell'account."
+
+#: includes/class-providers.php:62
+msgid "Microsoft is retiring SMTP access with password: check that \"Authenticated SMTP\" is enabled on the mailbox and on the tenant."
+msgstr "Microsoft sta dismettendo l'accesso SMTP con password: verifica che \"SMTP autenticato\" sia abilitato sulla casella e sul tenant."
+
+#: includes/class-providers.php:70
+msgid "Username: SMTP login given by Brevo. Password: SMTP key (not the API key). Set up the domain's DKIM in Brevo."
+msgstr "Utente: login SMTP indicato da Brevo. Password: chiave SMTP (non la chiave API). Configura DKIM del dominio in Brevo."
+
+#: includes/class-providers.php:73
+msgid "cPanel / Plesk hosting (mail.domain)"
+msgstr "Hosting cPanel / Plesk (mail.dominio)"
+
+#: includes/class-providers.php:78
+msgid "Mail server of the site's hosting. Check the exact name in the hosting panel."
+msgstr "Server di posta dell'hosting del sito. Verifica il nome esatto nel pannello dell'hosting."
+
+#: includes/class-settings.php:206
+msgid "The saved SMTP password can no longer be read because the security keys (SALT) in wp-config.php have changed: enter it again in GRS DEVs → SMTP."
+msgstr "La password SMTP salvata non è più leggibile perché le chiavi di sicurezza (SALT) di wp-config.php sono cambiate: inseriscila di nuovo in GRS DEVs → SMTP."
+
+#: includes/class-settings.php:311
+msgid "Email alert not enabled: enter a valid address."
+msgstr "Avviso via email non attivato: inserisci un indirizzo valido."
+
+#: includes/class-tester.php:36
+msgid "Delivery is blocked (staging mode): disable it to run the test."
+msgstr "Gli invii sono bloccati (modalità staging): disattivala per eseguire il test."
+
+#. translators: %s: nome del sito.
+#: includes/class-tester.php:44
+#, php-format
+msgid "Test email from %s"
+msgstr "Email di test da %s"
+
+#. translators: %s: indirizzo destinatario.
+#: includes/class-tester.php:63
+#, php-format
+msgid "Test email sent to %s. Check the mailbox (spam folder too)."
+msgstr "Email di test inviata a %s. Controlla la casella (anche lo spam)."
+
+#: includes/class-tester.php:64
+msgid "Warning: SMTP is not configured, the email was sent with the server's default method."
+msgstr "Attenzione: SMTP non è configurato, l'email è partita con il metodo predefinito del server."
+
+#: includes/class-tester.php:69
+msgid "Delivery failed."
+msgstr "Invio non riuscito."
+
+#: includes/class-tester.php:88
+msgid "Site"
+msgstr "Sito"
+
+#: includes/class-tester.php:89
+msgid "Server"
+msgstr "Server"
+
+#: includes/class-tester.php:96
+msgid "It works!"
+msgstr "Funziona!"
+
+#. translators: %s: nome del sito.
+#: includes/class-tester.php:98
+#, php-format
+msgid "This is a test email sent from %s through GRS SMTP."
+msgstr "Questa è un'email di test inviata da %s tramite GRS SMTP."
+
+#: includes/class-tester.php:136
+msgid "Credentials rejected: check the username (usually the full email address) and password. Gmail requires an app password; Microsoft 365 requires authenticated SMTP to be enabled."
+msgstr "Credenziali rifiutate: controlla utente (di solito l'indirizzo email completo) e password. Per Gmail serve una password per le app; per Microsoft 365 l'SMTP autenticato deve essere abilitato."
+
+#: includes/class-tester.php:137
+msgid "Credentials rejected by the server: check username and password."
+msgstr "Credenziali rifiutate dal server: controlla utente e password."
+
+#: includes/class-tester.php:138
+msgid "Microsoft has disabled SMTP access with password for this mailbox or tenant: it must be re-enabled by the Microsoft 365 administrator, or another sending service must be used."
+msgstr "Microsoft ha disattivato l'accesso SMTP con password per questa casella o tenant: va riabilitato dall'amministratore Microsoft 365 o va usato un altro servizio di invio."
+
+#: includes/class-tester.php:139
+msgid "Microsoft 365: authenticated SMTP disabled for this mailbox or tenant."
+msgstr "Microsoft 365: SMTP autenticato disabilitato per questa casella o tenant."
+
+#: includes/class-tester.php:140
+msgid "Problem with the server's SSL certificate: check that the host exactly matches the certificate name (e.g. smtps.aruba.it, not mail.domain.com)."
+msgstr "Problema con il certificato SSL del server: verifica che l'host corrisponda esattamente al nome del certificato (es. smtps.aruba.it, non mail.dominio.it)."
+
+#: includes/class-tester.php:141
+msgid "SSL error: encryption and port probably do not match. Use SSL with port 465 or TLS with port 587."
+msgstr "Errore SSL: probabilmente cifratura e porta non corrispondono. Usa SSL con porta 465 oppure TLS con porta 587."
+
+#: includes/class-tester.php:142
+msgid "Connection refused: wrong port or blocked by the hosting. Try 587 with TLS or 465 with SSL, or ask the hosting whether outgoing SMTP ports are open."
+msgstr "Connessione rifiutata: porta errata o bloccata dall'hosting. Prova 587 con TLS o 465 con SSL, oppure chiedi all'hosting se le porte SMTP in uscita sono aperte."
+
+#: includes/class-tester.php:143
+msgid "The server does not respond: the hosting may block outgoing SMTP connections or the host is wrong."
+msgstr "Il server non risponde: l'hosting potrebbe bloccare le connessioni SMTP in uscita o l'host è errato."
+
+#: includes/class-tester.php:144
+msgid "Host not found: check the SMTP server name."
+msgstr "Host non trovato: controlla il nome del server SMTP."
+
+#: includes/class-tester.php:145 includes/class-tester.php:146
+msgid "Connection to the server failed: check host, port and encryption, and that the hosting does not block outgoing SMTP ports."
+msgstr "Connessione al server non riuscita: verifica host, porta e cifratura, e che l'hosting non blocchi le porte SMTP in uscita."
+
+#: includes/class-tester.php:147
+msgid "The server rejects the sender: use the same address as the SMTP account or an authorized alias as sender."
+msgstr "Il server rifiuta il mittente: usa come mittente lo stesso indirizzo dell'account SMTP o un alias autorizzato."
+
+#: includes/class-tester.php:148
+msgid "The sender does not belong to the SMTP account: use the same address as the account or an authorized alias."
+msgstr "Il mittente non appartiene all'account SMTP: usa lo stesso indirizzo dell'account o un alias autorizzato."
+
+#: includes/class-tester.php:149
+msgid "Microsoft 365: the account is not allowed to send on behalf of the given sender."
+msgstr "Microsoft 365: l'account non ha il permesso di inviare a nome del mittente indicato."
+
+#: includes/class-tester.php:150
+msgid "The server rejected one or more recipients: the address does not exist or is not accepted. Check that it is spelled correctly."
+msgstr "Il server ha rifiutato uno o più destinatari: l'indirizzo non esiste o non è accettato. Controlla che sia scritto correttamente."
+
+#: includes/class-tester.php:151
+msgid "Invalid email address (sender or recipient)."
+msgstr "Indirizzo email non valido (mittente o destinatario)."
+
+#: includes/class-tester.php:152
+msgid "SMTP is not active and the server does not allow sending with PHP's mail() function: configure the SMTP settings."
+msgstr "SMTP non è attivo e il server non permette l'invio con la funzione mail() di PHP: configura i dati SMTP."
